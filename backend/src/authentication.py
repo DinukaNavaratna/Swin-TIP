@@ -6,7 +6,7 @@ from flask_restful import Resource
 from loguru import logger
 from .auth import new_access_token, new_refresh_token
 from database.functions import Select, Insert, Update
-#from .ses import send_email
+from .ses import send_email
 
 logger.add('logs/'+str(datetime.datetime.now().date())+'/login_register.log', format='{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}', filter="src.login_register", colorize=True, level='DEBUG')
 
@@ -60,7 +60,37 @@ class Register(Resource):
     def post(self):
         logger.debug("------------------------------------------------")
         logger.info('/Register - '+str(request.remote_addr))
-        return {"response": "", "message": "", "description": ""}, 200
+        try:
+            request_body = request.json
+            email = request_body["email"]
+            password = request_body["password"]
+        except Exception as exception:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
+            return {"response": "error", "message": "Required fields are missing!"}, 403
+        
+        if(email == "" or password == ""):
+            logger.error("Registraion failed - empty values\n")
+            return {"response": "error", "message": "One or more required fields are empty!"}, 403
+
+        password = MD5Hash(password)
+        public_id = MD5Hash(email+"+"+password+"@SwinTIP")
+        insert_values = [(email, password, public_id, 0)]
+        register_response = Insert("users", "email, password, public_id, user_type", "%s, %s, %s, %s", insert_values)
+
+        if register_response == 1:
+            try:
+                send_email([email], 'Account-Activation', '{"activation_link": "'+os.getenv("WEB_HOST")+'/activate/user/'+public_id+'", "home_link": "https://dinuka.live"}')
+            except Exception as exception:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
+                return {"response": "success", "message": "An error occurred when sending the confirmation email!"}, 200
+            logger.info("Registration successful - "+email)
+            return {"response": "success"}, 200
+        else:
+            logger.info("Registration failed - "+email+"\n"+str(register_response))
+            return {"response": "failed", "message": "Registration failed!", "description": str(register_response)}, 200
+
         
 
 class ActivateAccount(Resource):
