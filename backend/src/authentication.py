@@ -94,15 +94,56 @@ class Register(Resource):
         
 
 class ActivateAccount(Resource):
-    def get(self):
+    def get(self, id):
         logger.debug("------------------------------------------------")
         logger.info('/ActivateAccount - '+str(request.remote_addr))
-        return {"response": "", "message": "", "description": ""}, 200
-        
+        try:
+            public_id = id
+        except Exception as exception:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            logger.error("Exception: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
+            return {"msg": "Error Occurred!"}, 403
+
+        activate_response = Update("users", "status = 1", "public_id='"+public_id+"'")
+
+        if activate_response == 1:
+            logger.info("Activation successful - "+public_id)
+            return "Account activated successfully!"
+            #return render_template('./templates/activation_success.html')
+        else:
+            logger.info("Activation failed - "+public_id+"\n"+str(activate_response))
+            return "Account activation failed! Please request another verification link through the application."
+            #return render_template('./templates/activation_fail.html')
+       
+
 
 class VerificationEmailRequest(Resource):
     def post(self):
         logger.debug("------------------------------------------------")
         logger.info('/VerificationEmailRequest - '+str(request.remote_addr))
-        return {"response": "", "message": "", "description": ""}, 200
-        
+        try:
+            request_body = request.json
+            email = request_body["email"]
+        except Exception as exception:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            logger.error("Exception: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
+            return {"msg": "Error Occurred!"}, 403
+
+        verification_email_response = Select("public_id, status", "users", " WHERE email='"+email+"'", 1)
+
+        if(verification_email_response == None):
+            return {"response": "failed", "message": "User not found!"}, 200
+        elif(type(verification_email_response) is tuple):
+            if(verification_email_response[1] == 1):
+                return {"response": "failed", "message": "Account is already activated. Please log in to proceed!"}
+            public_id = verification_email_response[0]
+            try:
+                send_email([email], 'Account-Activation', '{"activation_link": "'+os.getenv("WEB_HOST")+'/activate/user/'+public_id+'", "home_link": "https://dinuka.live"}')
+            except:
+                return {"response": "success", "message": "An error occurred when sending the confirmation email!"}, 200
+            logger.info("Verification email request successful - "+email)
+            return {"response": "success", "message": "Verification email has been sent!"}, 200
+        else:
+            logger.info("Login failed - "+email+"\n"+str(verification_email_response))
+            return {"response": "failed", "message": "Verification email request failed!", "description": str(verification_email_response)}, 200
+                
