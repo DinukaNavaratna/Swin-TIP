@@ -17,7 +17,8 @@ def CreateDB():
 
   if db.is_connected():
     cursor = db.cursor()
-    cursor.execute("CREATE DATABASE beta")
+    cursor.execute("DROP DATABASE tip")
+    cursor.execute("CREATE DATABASE tip")
     return "Database created"
   else:
     return "Database not created"

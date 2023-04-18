@@ -40,6 +40,12 @@ class Login(Resource):
                 return {"response": "failed", "message": "Account not activated. Please verify the email address and try again!"}
             public_id = login_response[0]
             user_type = login_response[1]
+            if user_type == 0:
+                user_type = "casual"
+            elif user_type == 1:
+                user_type = "permanent"
+            elif user_type == 2:
+                user_type = "admin"
             access_token = new_access_token(public_id)
             refresh_token = new_refresh_token(public_id)
             logger.info("Login successful - "+email)
