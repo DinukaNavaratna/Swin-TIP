@@ -49,7 +49,7 @@ class Login(Resource):
             access_token = new_access_token(public_id)
             refresh_token = new_refresh_token(public_id)
             logger.info("Login successful - "+email)
-            return {"response": "success", "user_type": user_type, "access_token": access_token, "refresh_token": refresh_token}, 200
+            return {"response": "success", "id": public_id, "user_type": user_type, "access_token": access_token, "refresh_token": refresh_token}, 200
         else:
             logger.info("Login failed - "+email+"\n"+str(login_response))
             return {"response": "failed", "message": "Login failed!", "description": str(login_response)}, 200
