@@ -1,0 +1,11 @@
+.typeOption:hover {
+    color: Red;
+    cursor: pointer;
+    font-size: 1.55rem;
+    font-weight: bold;
+}
+.typeOption {
+    color: DodgerBlue;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
