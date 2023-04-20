@@ -1,4 +1,5 @@
 import boto3
+import os
 
 ses_client = boto3.client('ses', 
                 aws_access_key_id=os.getenv("SES_KEY_ID"), 
@@ -21,7 +22,7 @@ def AccountActivationTeamplate():
 
 def send_email(to, template, data):
     response = ses_client.send_templated_email(
-        Source = 'dinuka@archelolab.com',
+        Source = os.getenv("EMAIL_SOURCE"),
         Destination = {
             'ToAddresses': to
         },
