@@ -1,9 +1,9 @@
 import boto3
 
 ses_client = boto3.client('ses', 
-                aws_access_key_id="AKIARMX2BDBX4RSABBK6", 
-                aws_secret_access_key="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", 
-                region_name="us-east-2"
+                aws_access_key_id=os.getenv("SES_KEY_ID"), 
+                aws_secret_access_key=os.getenv("SES_KEY"), 
+                region_name=os.getenv("SES_REGION")
             )
 
 def AccountActivationTeamplate():
