@@ -17,7 +17,7 @@ class Vacancies(Resource):
         search_response = Select("public_id, title, module, base, location, description, qualifications, num_applicants, published_by, publish_date, last_edited_by, edit_date", "vacancies", " where status=1", 0)
 
         if(search_response == None):
-            return {"response": "failed", "message": "User not found!"}, 200
+            return {"response": "failed", "message": "Vacancies not found!"}, 200
         elif(type(search_response) is list):
             response = {}
             response["response"] = "success"
@@ -27,8 +27,30 @@ class Vacancies(Resource):
             response["vacancies"] = vacancies
             return response
         else:
-            logger.info("Vacancies retrieve failed - ")
+            logger.info("Vacancies retrieve failed")
             return {"response": "failed", "message": "Vacancies retrieve failed!", "description": str(search_response)}, 200
+            
+
+class Modules(Resource):
+    def get(self):
+        logger.debug("------------------------------------------------")
+        logger.info('/Modules (get) - '+str(request.remote_addr))
+
+        search_response = Select("id, name", "modules", "", 0)
+
+        if(search_response == None):
+            return {"response": "failed", "message": "Modules not found!"}, 200
+        elif(type(search_response) is list):
+            response = {}
+            response["response"] = "success"
+            modules = []
+            for module in search_response:
+                modules.append({"id":str(module[0]), "name":str(module[1])})
+            response["vacancies"] = modules
+            return response
+        else:
+            logger.info("Modules retrieve failed")
+            return {"response": "failed", "message": "Modules retrieve failed!", "description": str(search_response)}, 200
             
 
 class ApplyVacancy(Resource):

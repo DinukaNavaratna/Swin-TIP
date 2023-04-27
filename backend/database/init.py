@@ -47,17 +47,16 @@ def CreateTables():
   public_id VARCHAR(32) UNIQUE,
   title VARCHAR(50),
   module INT(1) COMMENT 'modules table ref',
-  ref VARCHAR(32),
   base INT(1) DEFAULT 2 COMMENT '0-Full-time, 1-Part-time, 2-Casual',
   location VARCHAR(50),
   description VARCHAR(50),
   qualifications VARCHAR(50),
-  num_applicants INT(3),
+  num_applicants INT(3) DEFAULT 0,
   published_by INT(1) COMMENT 'users table ref',
   publish_date VARCHAR(10) DEFAULT(CURRENT_DATE),
   last_edited_by INT(1) COMMENT 'users table ref',
-  edit_date VARCHAR(10),
-  status INT(1) COMMENT '1-live, 2-Deleted',
+  edit_date VARCHAR(10) DEFAULT(CURRENT_DATE),
+  status INT(1) DEFAULT 1 COMMENT '1-live, 2-Deleted',
   PRIMARY KEY (id))""")
 
   cursor.execute("""CREATE TABLE IF NOT EXISTS modules (
@@ -133,6 +132,18 @@ def DummyData():
   ('Phsycology'),
   ('Nursing'),
   ('Engineering');
+  """)
+
+  cursor.execute("""INSERT IGNORE INTO vacancies (public_id, title, module, base, location, description, qualifications, published_by, last_edited_by) VALUES 
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 1', 1, 1, 'AU', 'Description 1', 'Qualifications 1', 2, 2),
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 2', 2, 1, 'AU', 'Description 2', 'Qualifications 2', 2, 4),
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 3', 3, 1, 'AU', 'Description 3', 'Qualifications 3', 2, 2),
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 4', 4, 1, 'AU', 'Description 4', 'Qualifications 4', 2, 4),
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 5', 1, 1, 'AU', 'Description 5', 'Qualifications 5', 2, 2),
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 6', 2, 1, 'AU', 'Description 6', 'Qualifications 6', 2, 2),
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 7', 3, 1, 'AU', 'Description 7', 'Qualifications 7', 2, 4),
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 8', 3, 1, 'AU', 'Description 8', 'Qualifications 8', 2, 2),
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 9', 4, 1, 'AU', 'Description 9', 'Qualifications 9', 2, 2);
   """)
 
   db.commit()
