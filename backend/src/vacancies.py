@@ -23,7 +23,7 @@ class Vacancies(Resource):
             response["response"] = "success"
             vacancies = []
             for vacancy in search_response:
-                vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":str(vacancy[3]), "location":str(vacancy[3]), "description":str(vacancy[3]), "qualifications":str(vacancy[3]), "num_applicants":str(vacancy[3]), "published_by":str(vacancy[3]), "publish_date":str(vacancy[3]), "last_edited_by":str(vacancy[3]), "edit_date":str(vacancy[3])})
+                vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":str(vacancy[3]), "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "published_by":str(vacancy[8]), "publish_date":str(vacancy[9]), "last_edited_by":str(vacancy[10]), "edit_date":str(vacancy[11])})
             response["vacancies"] = vacancies
             return response
         else:
