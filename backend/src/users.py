@@ -28,6 +28,7 @@ class UserProfile(Resource):
             logger.info("User profile details retrieve failed - ")
             return {"response": "failed", "message": "User profile details retrieve failed!", "description": str(search_response)}, 200
             
+            
     def post(self, id):
         logger.debug("------------------------------------------------")
         logger.info('/UserProfile (post) - '+str(request.remote_addr))
