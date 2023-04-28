@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "react-notifications/lib/notifications.css";
 
 
-class Package extends Component {
+class JobTile extends Component {
 
     render() {
         const { item } = this.props;
@@ -71,4 +71,4 @@ const mapStateToProps = (state) => ({
     emp: state.emp,
 });
 
-export default connect(mapStateToProps, null)(Package);
+export default connect(mapStateToProps, null)(JobTile);

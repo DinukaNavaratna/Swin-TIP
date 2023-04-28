@@ -11,7 +11,7 @@ import disableBrowserBackButton from "disable-browser-back-navigation";
 import Alert from "@material-ui/lab/Alert";
 
 
-class AddPackage extends Component{
+class AddJob extends Component{
     state = {
         serialCode: "",
         packageName: "",
@@ -357,4 +357,4 @@ const mapStateToProps = (state) => ({
     emp: state.emp,
 });
 
-export default connect(mapStateToProps, null)(AddPackage);
+export default connect(mapStateToProps, null)(AddJob);

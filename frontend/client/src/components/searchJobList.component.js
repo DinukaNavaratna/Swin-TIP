@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import Package from "./package.component";
+import JobTile from "./jobTile.component";
 import "react-notifications/lib/notifications.css";
 import styles from './css/searchPackageList.module.css';
 
 
 
 
-class SearchPackageList extends Component {
+class SearchJobList extends Component {
     state = {
         pager: {},
         pageOfItems: [],
@@ -104,7 +104,7 @@ class SearchPackageList extends Component {
                     <div className="card-body ">
                         {pageOfItems.map((item) => (
                             <>
-                                <Package item={item}/>
+                                <JobTile item={item}/>
                             </>
                         ))}
                     </div>
@@ -191,4 +191,4 @@ const mapStateToProps = (state) => ({
     emp: state.emp,
 });
 
-export default connect(mapStateToProps, null)(SearchPackageList);
+export default connect(mapStateToProps, null)(SearchJobList);

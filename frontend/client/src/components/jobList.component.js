@@ -2,23 +2,23 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import Package from "./package.component";
+import JobTile from "./jobTile.component";
 import "react-notifications/lib/notifications.css";
-import Carousel from "../components/Carousel";
+import Carousel from "./Carousel";
 
-class PackageList extends Component {
+class JobList extends Component {
   state = {
     pager: {},
     pageOfItems: [],
   };
 
   componentDidMount() {
-    this.loadPage();
+    //this.loadPage();
 
   }
 
   componentDidUpdate() {
-    this.loadPage();
+    //this.loadPage();
   }
 
   static propTypes = {
@@ -64,7 +64,7 @@ class PackageList extends Component {
           <div className="card-body ">
             {pageOfItems.map((item) => (
               <>
-                <Package item={item}/>
+                <JobTile item={item}/>
               </>
             ))}
           </div>
@@ -151,4 +151,4 @@ const mapStateToProps = (state) => ({
   emp: state.emp,
 });
 
-export default connect(mapStateToProps, null)(PackageList);
+export default connect(mapStateToProps, null)(JobList);
