@@ -57,7 +57,7 @@ class JobList extends Component {
 
 
         <div className="card text-center m-3">
-          <h3 className="card-header font-weight-bold">Internet Package List</h3>
+          <h3 className="card-header font-weight-bold">Job Vacancy List</h3>
 
 
 

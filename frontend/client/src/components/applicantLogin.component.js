@@ -30,7 +30,7 @@ class  LoginApplicant  extends  Component{
             msg :null
         });
 
-        this.props.history.push('/addPackage');
+        this.props.history.push('/addJob');
     }
 
     componentDidUpdate =(prevProps) => {
@@ -90,9 +90,9 @@ class  LoginApplicant  extends  Component{
     render() {
         return (
             <div style={{marginTop: 10}}>
-                <Link to={"/registerEmp"} className="nav-link"><button className="btn btn-danger float-right">Employee Register</button></Link>
+                <Link to={"/registerEmp"} className="nav-link"><button className="btn btn-danger float-right">Applicant Register</button></Link>
                 <br/><br/>
-                <h3>Employee Sign In</h3>
+                <h3>Applicant Sign In</h3>
                 <form onSubmit={this.onSubmit}>
 
                     <div className="form-group">

@@ -35,7 +35,7 @@ class RegisterApplicant extends Component {
       msgtop: null,
     });
 
-    this.props.history.push("/addPackage");
+    this.props.history.push("/addJob");
   };
 
   componentDidUpdate = (prevProps) => {
@@ -127,7 +127,7 @@ class RegisterApplicant extends Component {
         empConfirmPw: "",
         empPin: "",
         msg: null,
-        msgtop: "Register Fail, Not an Employee",
+        msgtop: "Register Fail, Not an Applicant",
       });
     }
   };
@@ -135,7 +135,7 @@ class RegisterApplicant extends Component {
   render() {
     return (
       <div style={{ marginTop: 10 }}>
-        <h3>Employee Sign Up</h3>
+        <h3>Applicant Sign Up</h3>
         <form onSubmit={this.onSubmit}>
           {this.state.msgtop ? (
             <Alert color="danger">{this.state.msgtop}</Alert>
