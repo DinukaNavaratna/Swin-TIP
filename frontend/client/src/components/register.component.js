@@ -35,7 +35,7 @@ class RegisterEmp extends Component {
       msgtop: null,
     });
 
-    this.props.history.push("/addPackage");
+    this.props.history.push("/addJob");
   };
 
   componentDidUpdate = (prevProps) => {

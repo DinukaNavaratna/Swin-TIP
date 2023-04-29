@@ -30,7 +30,7 @@ class  LoginEmp  extends  Component{
             msg :null
         });
 
-        this.props.history.push('/addPackage');
+        this.props.history.push('/addJob');
     }
 
     componentDidUpdate =(prevProps) => {
