@@ -10,7 +10,7 @@ def AccountActivationTeamplate():
     template = open("templates/account_activation_email.txt", "r")
     response = ses_client.create_template(
         Template={
-        "TemplateName" : "Account-Activation",
+        "TemplateName" : "SwinTIP-Account-Activation",
         "SubjectPart" : "Please activate your account...",
         "HtmlPart" : template.read(),
         "TextPart" : "Welcome,\r\n\r\nPlease visit the following link by copying the following link into your browser to activate your account.\r\n\r\n{{activation_link}}\r\n\r\nThank you.\r\n\r\nSwinTIP\r\n104205090@student.swin.edu.au\r\n"
@@ -21,7 +21,7 @@ def AccountActivationTeamplate():
 
 def send_email(to, template, data):
     response = ses_client.send_templated_email(
-        Source = 'dinuka@archelolab.com',
+        Source = 'SwinTIP <noreply@corputip.me>',
         Destination = {
             'ToAddresses': to
         },

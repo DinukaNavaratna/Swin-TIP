@@ -80,7 +80,7 @@ class Register(Resource):
 
         if register_response == 1:
             try:
-                send_email([email], 'Account-Activation', '{"activation_link": "'+os.getenv("WEB_HOST")+'/activate/user/'+public_id+'", "home_link": "https://dinuka.live"}')
+                send_email([email], 'SwinTIP-Account-Activation', '{"activation_link": "'+os.getenv("API_HOST")+'/activate/user/'+public_id+'", "home_link": "https://dinuka.live"}')
             except Exception as exception:
                 exc_type, exc_obj, exc_tb = sys.exc_info()
                 logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
@@ -138,7 +138,7 @@ class VerificationEmailRequest(Resource):
                 return {"response": "failed", "message": "Account is already activated. Please log in to proceed!"}
             public_id = verification_email_response[0]
             try:
-                send_email([email], 'Account-Activation', '{"activation_link": "'+os.getenv("WEB_HOST")+'/activate/user/'+public_id+'", "home_link": "https://dinuka.live"}')
+                send_email([email], 'SwinTIP-Account-Activation', '{"activation_link": "'+os.getenv("API_HOST")+'/activate/user/'+public_id+'", "home_link": "https://dinuka.live"}')
             except:
                 return {"response": "success", "message": "An error occurred when sending the confirmation email!"}, 200
             logger.info("Verification email request successful - "+email)
