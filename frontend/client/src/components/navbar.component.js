@@ -63,7 +63,7 @@ class NavbarComponent extends Component {
             <NavItem>
               <Link to={'/loginApplicant'} className='nav-link'>
                 {' '}
-                <button className='btn btn-primary'>Login</button>
+               Login
               </Link>
             </NavItem>
           </li>
@@ -72,7 +72,7 @@ class NavbarComponent extends Component {
             <NavItem>
               <Link to={'/loginEmp'} className='nav-link'>
                 {' '}
-                <button className='btn btn-primary'>Employee</button>
+               Employee
               </Link>
             </NavItem>
           </li>

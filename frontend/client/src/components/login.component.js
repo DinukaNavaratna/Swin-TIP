@@ -96,14 +96,14 @@ class  LoginEmp  extends  Component{
                 <form onSubmit={this.onSubmit}>
 
                     <div className="form-group">
-                        <label>Username :</label>
-                        <input type="text" className="form-control" value={this.state.empUn} onChange={this.onChangeEmpUn}/>
+
+                        <input type="text" className="form-control" placeholder="Username" value={this.state.empUn} onChange={this.onChangeEmpUn}/>
 
                     </div>
 
 
                     <div className="form-group">
-                        <label>Password :</label>
+                       
                         <input type="password" className="form-control" value={this.state.empPw} onChange={this.onChangeEmpPw}/>
 
                     </div>

@@ -22,18 +22,7 @@ const items = [
     altText: "Slide 3",
     key: "3",
   },
-  {
-    src: "/images/slide4.JPG",
-    altText: "Slide 4",
-
-    key: "4",
-  },
-  {
-    src:
-        "/images/slide5.JPG",
-    altText: "Slide 5",
-    key: "5",
-  },
+ 
 ];
 
 const Carousel = () => (
