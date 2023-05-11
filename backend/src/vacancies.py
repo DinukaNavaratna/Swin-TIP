@@ -282,7 +282,7 @@ class ApplyVacancy(Resource):
             vacancy_id = vacancy_response[0]
         else:
             logger.info("Vacancy not  found - "+email+"\n"+str(vacancy_response))
-            return {"response": "failed", "message": "Vacancy not  found!", "description": str(vacancy_response)}, 200
+            return {"response": "failed", "message": "Vacancy not found!", "description": str(vacancy_response)}, 200
         
 
         insert_values = [(user_id, vacancy_id)]
@@ -304,6 +304,8 @@ class ApplyVacancy(Resource):
             return {"response": "success", "message": msg}, 200
         else:
             logger.info("Application failed\n"+str(initialize_response))
+            if "Duplicate entry" in str(initialize_response):
+                initialize_response = "User has already applied for this vacancy."
             return {"response": "failed", "message": "Application failed!", "description": str(initialize_response)}, 200
 
 

@@ -35,11 +35,17 @@ def CreateTables():
 
   cursor.execute("""CREATE TABLE IF NOT EXISTS users (
   id INT NOT NULL AUTO_INCREMENT,
+  f_name VARCHAR(20),
+  l_name VARCHAR(20),
+  bday VARCHAR(20),
+  edu_q VARCHAR(250),
+  prof_q VARCHAR(250),
   email VARCHAR(50) UNIQUE,
   password VARCHAR(32),
   public_id VARCHAR(32) UNIQUE,
   user_type INT(1) DEFAULT 0 COMMENT '0-casual, 1-permanent, 2-admin',
   status INT(1) DEFAULT 0 COMMENT '0-pending, 1-active, 2-deactivated',
+  last_edit_on VARCHAR(10) DEFAULT(CURRENT_DATE),
   PRIMARY KEY (id))""")
 
   cursor.execute("""CREATE TABLE IF NOT EXISTS vacancies (
@@ -69,7 +75,8 @@ def CreateTables():
   user_id INT(3),
   vacancy_id INT(3),
   date VARCHAR(10) DEFAULT(CURRENT_DATE),
-  PRIMARY KEY (id))""")
+  PRIMARY KEY (id),
+  UNIQUE KEY (user_id, vacancy_id))""")
 
   cursor.close()
   db.close()
@@ -104,6 +111,7 @@ def TruncateTables():
   cursor = db.cursor()
   cursor.execute("TRUNCATE TABLE users;")
   cursor.execute("TRUNCATE TABLE vacancies;")
+  cursor.execute("TRUNCATE TABLE applicants;")
   db.commit()
   cursor.close()
   db.close()
@@ -121,7 +129,7 @@ def DummyData():
 
   cursor.execute("""INSERT IGNORE INTO users (email, password, public_id, user_type, status) VALUES 
   ('1@test.mail', '1146b6c258a28b28941c57851ee084a1', '7bf182afed5eda1684ecb29bae3a8588', 0, 0),
-  ('2@test.mail', '1146b6c258a28b28941c57851ee084a1', '807a71a98cf0eba74dbd83e55255e408', 1, 1),
+  ('2@test.mail', '1146b6c258a28b28941c57851ee084a1', '007a71a98cf0eba74dbd83e55255e408', 1, 1),
   ('3@test.mail', '1146b6c258a28b28941c57851ee084a1', '3b6888710a76469e33922bd573d76a1f', 0, 1),
   ('4@test.mail', '1146b6c258a28b28941c57851ee084a1', '70c73d64a608e710ad7e227fea08938d', 2, 1),
   ('5@test.mail', '1146b6c258a28b28941c57851ee084a1', 'f9fea2e0e5c790e8d79f8ebf0f2127c4', 1, 0),
