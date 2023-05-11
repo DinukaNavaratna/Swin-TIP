@@ -1,4 +1,5 @@
 import boto3
+from loguru import logger
 
 ses_client = boto3.client('ses', 
                 aws_access_key_id="AKIARMX2BDBX4RSABBK6", 
@@ -8,6 +9,7 @@ ses_client = boto3.client('ses',
 
 
 def send_email(to, template, data):
+    logger.info(to)
     response = ses_client.send_templated_email(
         Source = 'SwinTIP <noreply@corputip.me>',
         Destination = {
@@ -17,6 +19,7 @@ def send_email(to, template, data):
         TemplateData = data
     )
     print(response)
+    logger.info(response)
 
 
 def CreateTeamplate():

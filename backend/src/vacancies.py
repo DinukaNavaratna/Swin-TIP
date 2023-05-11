@@ -292,10 +292,10 @@ class ApplyVacancy(Resource):
             logger.info("Application successful")
             msg = "Application successful!"
             try:
-                send_email([user_response[1]], 'SwinTIP-Application-Confirmation', '{"job_title": "'+vacancy_response[1]+'", "module": "'+str(vacancy_response[2])+'", "location": "'+vacancy_response[3]+'", "applied_on": "'+str(date.today())+'"}')
+                send_email([user_response[1]], 'SwinTIP-Application-Confirmation', '{"job_title": "'+vacancy_response[1]+'", "module": "'+str(vacancy_response[2])+'", "location": "'+vacancy_response[3]+'", "applied_on": "'+str(date.today())+'", "home_link": "https://dinuka.live"}')
                 staff_response = Select("email", "users", " WHERE id='"+str(vacancy_response[4])+"'", 1)
                 if(type(staff_response) is tuple):
-                    send_email([staff_response[0]], 'SwinTIP-New-Applicant', '{"job_title": "'+vacancy_response[1]+'", "module": "'+str(vacancy_response[2])+'", "location": "'+vacancy_response[3]+'", "applicant_name": "'+user_response[2]+'", "applicant_email": "'+user_response[1]+'", "applied_on": "'+str(date.today())+'"}')
+                    send_email([staff_response[0]], 'SwinTIP-New-Applicant', '{"job_title": "'+vacancy_response[1]+'", "module": "'+str(vacancy_response[2])+'", "location": "'+vacancy_response[3]+'", "applicant_name": "'+user_response[2]+'", "applicant_email": "'+user_response[1]+'", "applied_on": "'+str(date.today())+'", "home_link": "https://dinuka.live"}')
                     logger.info("\nEmails sent to: "+str(user_response[1])+" & "+str(staff_response[0]))
             except Exception as exception:
                 exc_type, exc_obj, exc_tb = sys.exc_info()
