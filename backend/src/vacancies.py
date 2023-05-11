@@ -8,6 +8,7 @@ from loguru import logger
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import get_jwt_identity
 from database.functions import Select, Insert, Update
+from .ses import send_email
 
 logger.add('logs/'+str(datetime.datetime.now().date())+'/vacancies.log', format='{time:YYYY-MM-DD at HH:mm:ss} | {level} | {message}', filter="src.search", colorize=True, level='DEBUG')
 
@@ -246,13 +247,13 @@ class Modules(Resource):
         else:
             logger.info("Modules retrieve failed")
             return {"response": "failed", "message": "Modules retrieve failed!", "description": str(search_response)}, 200
-            
+
 
 class ApplyVacancy(Resource):
     @jwt_required()
     def post(self):
         logger.debug("------------------------------------------------")
-        logger.info('/ApplyVacancy Post - '+str(request.remote_addr))
+        logger.info('/ApplyVacancy (post) - '+str(request.remote_addr))
 
         try:
             user_id = get_jwt_identity()
@@ -263,7 +264,7 @@ class ApplyVacancy(Resource):
             logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
             return {"response": "error", "message": "Required fields are missing!"}, 403
 
-        user_response = Select("id", "users", " WHERE public_id='"+user_id+"'", 1)
+        user_response = Select("id, email, public_id", "users", " WHERE public_id='"+user_id+"'", 1)
 
         if(user_response == None):
             return {"response": "failed", "message": "User not found!"}, 200
@@ -273,7 +274,7 @@ class ApplyVacancy(Resource):
             logger.info("User not  found - "+email+"\n"+str(user_response))
             return {"response": "failed", "message": "User not  found!", "description": str(user_response)}, 200
         
-        vacancy_response = Select("id", "vacancies", " WHERE public_id='"+vacancy_id+"'", 1)
+        vacancy_response = Select("id, title, module, location, published_by", "vacancies", " WHERE public_id='"+vacancy_id+"'", 1)
 
         if(vacancy_response == None):
             return {"response": "failed", "message": "Vacancy not found!"}, 200
@@ -289,7 +290,18 @@ class ApplyVacancy(Resource):
 
         if initialize_response == 1:
             logger.info("Application successful")
-            return {"response": "success"}, 200
+            msg = "Application successful!"
+            try:
+                send_email([user_response[1]], 'SwinTIP-Application-Confirmation', '{"job_title": "'+vacancy_response[1]+'", "module": "'+str(vacancy_response[2])+'", "location": "'+vacancy_response[3]+'", "applied_on": "'+str(date.today())+'"}')
+                staff_response = Select("email", "users", " WHERE id='"+str(vacancy_response[4])+"'", 1)
+                if(type(staff_response) is tuple):
+                    send_email([staff_response[0]], 'SwinTIP-New-Applicant', '{"job_title": "'+vacancy_response[1]+'", "module": "'+str(vacancy_response[2])+'", "location": "'+vacancy_response[3]+'", "applicant_name": "'+user_response[2]+'", "applicant_email": "'+user_response[1]+'", "applied_on": "'+str(date.today())+'"}')
+                    logger.info("\nEmails sent to: "+str(user_response[1])+" & "+str(staff_response[0]))
+            except Exception as exception:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
+                msg = "Notification emailed failed. "+str(exception)
+            return {"response": "success", "message": msg}, 200
         else:
             logger.info("Application failed\n"+str(initialize_response))
             return {"response": "failed", "message": "Application failed!", "description": str(initialize_response)}, 200
