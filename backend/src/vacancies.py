@@ -331,7 +331,7 @@ class ViewApplicants(Resource):
             logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
             return {"response": "error", "message": "Unauthorized access!"}, 403
 
-        search_response = Select("user_id, vacancy_id, date", "applicants", "", 0)
+        search_response = Select("users.f_name, users.l_name, users.email, users.public_id, vacancies.title, modules.name, applicants.date", "applicants", " INNER JOIN users ON applicants.user_id = users.id INNER JOIN vacancies ON applicants.vacancy_id = vacancies.id INNER JOIN modules ON vacancies.module = modules.id;", 0)
 
         if(search_response == None):
             return {"response": "failed", "message": "No applicants!"}, 200
@@ -340,7 +340,7 @@ class ViewApplicants(Resource):
             response["response"] = "success"
             applicants = []
             for applicant in search_response:
-                applicants.append({"user_id":str(applicant[0]), "vacancy_id":str(applicant[1]), "date":str(applicant[2])})
+                applicants.append({"f_name":str(applicant[0]), "l_name":str(applicant[1]), "email":str(applicant[2]), "public_id":str(applicant[3]), "title":str(applicant[4]), "module":str(applicant[5]), "date":str(applicant[6])})
             response["applicants"] = applicants
             return response
         else:
