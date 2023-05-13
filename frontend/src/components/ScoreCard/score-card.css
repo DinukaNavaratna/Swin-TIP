@@ -1,0 +1,43 @@
+.score-card {
+  background: #f0f5f5;
+  filter: drop-shadow(0px 2px 8px rgba(7, 15, 31, 0.1))
+    drop-shadow(0px 4px 24px rgba(7, 15, 31, 0.1));
+  /*padding: 8px 32px 8px 32px;*/
+}
+.chip {
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+}
+.modalA {
+  /*width: 200px;*/
+  /*height: 10px*/
+  overflow-y: initial !important;
+}
+
+.pop-up-modal {
+  height: 80vh;
+  overflow-y: auto;
+}
+
+.v1-column {
+  float: left;
+  /*padding: 5px;*/
+}
+
+.image-column {
+  width: 33.33%;
+  margin-top: 1.25rem;
+}
+
+.description-column {
+  width: 66.66%;
+}
+
+.v1-row {
+  content: '';
+  clear: both;
+  display: table;
+  margin: 10px;
+}
