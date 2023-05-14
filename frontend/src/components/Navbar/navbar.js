@@ -125,27 +125,21 @@ class NavigationBar extends Component {
                       <MenuIcon className="mb-1" />
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem header>Services</DropdownItem>
-                      <DropdownItem tag={Link} to="/analyzer">
-                        Valuator
-                      </DropdownItem>
+                      <DropdownItem header>Services</DropdownItem>                      
                       <DropdownItem tag={Link} to="/listing">
                         Listing
                       </DropdownItem>
                       <DropdownItem tag={Link} to="/postAd">
                         Post Ad
                       </DropdownItem>
-                      <DropdownItem tag={Link} to="/infoPortal">
-                        Info Portal
+                      <DropdownItem tag={Link} to="/register">
+                        Register
                       </DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem header>Other</DropdownItem>
                       <DropdownItem tag={Link} to="/about">
                         About Us
-                      </DropdownItem>
-                      <DropdownItem tag={Link} to="/contact">
-                        Contact Us
-                      </DropdownItem>
+                      </DropdownItem>                      
                       <DropdownItem tag={Link} to="/help">
                         Help
                       </DropdownItem>
