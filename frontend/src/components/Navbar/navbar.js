@@ -49,8 +49,8 @@ class NavigationBar extends Component {
             <NavItem>
               <Link to={'/profile'} className="nav-link">
                 {' '}
-                <button className="btn btn-warning">
-                  <strong> {user ? `Hi ${user.uName}` : null} </strong>
+                <button className="btn btn-warning">                 
+                  <strong> {user ? `Hi ${user.id}` : null} </strong>
                 </button>
               </Link>
             </NavItem>
@@ -106,8 +106,8 @@ class NavigationBar extends Component {
                 <div className="row m-0 p-0">
                   <img height="30" src="../../logo.png" />
                   <div className="row p-0 m-0">
-                    <h4 className="py-0 my-0 text-primary">Land</h4>
-                    <h4 className="py-0 my-0 ">Val</h4>
+                    <h4 className="py-0 my-0 text-primary">Corp</h4>
+                    <h4 className="py-0 my-0 ">U</h4>
                   </div>
                 </div>
               </NavbarBrand>

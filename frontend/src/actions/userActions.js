@@ -18,13 +18,13 @@ export const login =
   (dispatch) => {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json',       
       },
     };
-    const body = JSON.stringify({ uName, uPw });
+    const body = JSON.stringify({ email:uName, password:uPw });
 
     axios
-      .post(`${process.env.REACT_APP_BACK_END_URL}/users/login`, body, config)
+      .post(`${process.env.REACT_APP_BACK_END_URL}/login`, body, config)
       .then((res) =>
         dispatch({
           type: LOGIN_SUCCESS,
@@ -66,18 +66,18 @@ export const loadUser = () => (dispatch, getState) => {
 
 /// //////////////////////////////////////////////////////////////////////////////////////
 export const register =
-  ({ uName, uEmail, uPw }) =>
+  ({ firstName, lastName, email, password }) =>
   (dispatch) => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const body = JSON.stringify({ uName, uEmail, uPw });
+    const body = JSON.stringify({ firstName, lastName, email, password });
 
     axios
       .post(
-        `${process.env.REACT_APP_BACK_END_URL}/users/register`,
+        `${process.env.REACT_APP_BACK_END_URL}/register`,
         body,
         config
       )

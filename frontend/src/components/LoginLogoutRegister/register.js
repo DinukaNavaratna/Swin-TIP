@@ -8,15 +8,17 @@ import swal from 'sweetalert';
 
 class Register extends Component {
   state = {
-    uName: '',
-    uEmail: '',
-    uPw: '',
-    uConfirmPw: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
     msg: null,
   };
 
   static propTypes = {
     isAuthenticated: PropTypes.bool,
+    isRegistered: PropTypes.bool,
     error: PropTypes.object.isRequired,
     register: PropTypes.func.isRequired,
     clearErrors: PropTypes.func.isRequired,
@@ -25,19 +27,20 @@ class Register extends Component {
   registerClose = () => {
     this.props.clearErrors();
     this.setState({
-      uName: '',
-      uEmail: '',
-      uPw: '',
-      uConfirmPw: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
       msg: null,
       msgtop: null,
     });
-
-    this.props.history.push('/postAd');
+    swal('Successful', 'Accept the Confirmation Email and Login', 'success');
+    this.props.history.push('/');
   };
 
   componentDidUpdate = (prevProps) => {
-    const { error, isAuthenticated } = this.props;
+    const { error, isRegistered } = this.props; 
     if (error !== prevProps.error) {
       if (error.id === 'REGISTER_FAIL') {
         this.setState({ msg: error.msg.msg });
@@ -46,44 +49,45 @@ class Register extends Component {
       }
     }
 
-    if (this.state.msg) {
-      swal('Unsuccessful', this.state.msg, 'error');
-      this.setState({ msg: null });
-    }
-
-    if (isAuthenticated) {
+    if (isRegistered) {
       this.registerClose();
     }
   };
 
-  onChangeUName = (e) => {
+  onChangeFirstName = (e) => {
     this.setState({
-      uName: e.target.value,
+      firstName: e.target.value,
     });
   };
 
-  onChangeUEmail = (e) => {
+  onChangeLastName = (e) => {
     this.setState({
-      uEmail: e.target.value,
+      lastName: e.target.value,
     });
   };
 
-  onChangeUPw = (e) => {
+  onChangeEmail = (e) => {
     this.setState({
-      uPw: e.target.value,
+      email: e.target.value,
     });
   };
 
-  onChangeUConfirmPw = (e) => {
-    if (e.target.value !== this.state.uPw) {
+  onChangePassword = (e) => {
+    this.setState({
+      password: e.target.value,
+    });
+  };
+
+  onChangeConfirmPassword = (e) => {
+    if (e.target.value !== this.state.password) {
       this.setState({
-        uConfirmPw: e.target.value,
+        confirmPassword: e.target.value,
         msgtop: 'Confirm Password Does Not Match',
       });
     }
-    if (e.target.value === this.state.uPw) {
+    if (e.target.value === this.state.password) {
       this.setState({
-        uConfirmPw: e.target.value,
+        confirmPassword: e.target.value,
         msgtop: '',
       });
     }
@@ -92,20 +96,22 @@ class Register extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const { uName, uEmail, uPw } = this.state;
+    const { firstName, lastName, email, password } = this.state;
     const newUser = {
-      uName,
-      uEmail,
-      uPw,
+      firstName,
+      lastName,
+      email,
+      password,
     };
 
     this.props.register(newUser);
 
     this.setState({
-      uName: '',
-      uEmail: '',
-      uPw: '',
-      uConfirmPw: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
       msg: null,
       msgtop: null,
     });
@@ -123,13 +129,24 @@ class Register extends Component {
             <Alert color="danger">{this.state.msgtop}</Alert>
           ) : null}
           <div className="form-group">
-            <label>Username :</label>
+            <label>First Name :</label>
             <input
               type="text"
               className="form-control"
-              value={this.state.uName}
-              onChange={this.onChangeUName}
-              maxLength="10"
+              value={this.state.firstName}
+              onChange={this.onChangeFirstName}
+              maxLength="25"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Last Name :</label>
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.lastName}
+              onChange={this.onChangeLastName}
+              maxLength="25"
             />
           </div>
 
@@ -138,8 +155,8 @@ class Register extends Component {
             <input
               type="email"
               className="form-control"
-              value={this.state.uEmail}
-              onChange={this.onChangeUEmail}
+              value={this.state.email}
+              onChange={this.onChangeEmail}
             />
           </div>
 
@@ -148,8 +165,8 @@ class Register extends Component {
             <input
               type="password"
               className="form-control"
-              value={this.state.uPw}
-              onChange={this.onChangeUPw}
+              value={this.state.password}
+              onChange={this.onChangePassword}
               minLength="5"
             />
           </div>
@@ -159,8 +176,8 @@ class Register extends Component {
             <input
               type="password"
               className="form-control"
-              value={this.state.uConfirmPw}
-              onChange={this.onChangeUConfirmPw}
+              value={this.state.confirmPassword}
+              onChange={this.onChangeConfirmPassword}
               minLength="5"
             />
           </div>
@@ -176,6 +193,7 @@ class Register extends Component {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.user.isAuthenticated,
+  isRegistered: state.user.isRegistered,
   error: state.error,
 });
 

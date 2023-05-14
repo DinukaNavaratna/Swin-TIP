@@ -11,29 +11,19 @@ const Footer = () => (
       <div className="container-fluid bg-dark text-white">
         <div className="row ">
           <div className="col-md-3 py-3">
-            <div className="h6">LandVal</div>
+            <div className="h6">CorpU University</div>
             <hr />
             <p>
-              A Data-driven Online Decision Support System for​ Hotel Site
-              Selection and Investment. We Provide Services by Analysing the
-              Hotel Location and Identifying the Factors Contributing to a
-              Superior Location, Finding Available Land Plots for Developments
-              and Referring Complicated Government Documents for Guidelines and
-              Regulations.
+            CorpU University Is One Of The Leading Accredited Universities in Australia
+            That Provide Quality Education To Their Students. CorpU University Has Three
+            Campuses Around Australia. One in Perth, Another One in Sydney and The Main Campus
+            Located in Center of Melbourne. 
             </p>
           </div>
           <div className="col-md-3 py-3">
             <div className="h6">Services</div>
             <hr />
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item bg-dark text-white border-light">
-                <Link
-                  to="/analyzer"
-                  className="text-decoration-none text-white stretched-link"
-                >
-                  Valuator
-                </Link>
-              </li>
+            <ul className="list-group list-group-flush">            
               <li className="list-group-item bg-dark text-white border-light">
                 <Link
                   to="/listing"
@@ -49,15 +39,7 @@ const Footer = () => (
                 >
                   Post Ad
                 </Link>
-              </li>
-              <li className="list-group-item bg-dark text-white border-light">
-                <Link
-                  to="/infoPortal"
-                  className="text-decoration-none text-white stretched-link"
-                >
-                  Info Portal
-                </Link>
-              </li>
+              </li>              
               <li className="list-group-item bg-dark text-white border-light">
                 <Link
                   to="/register"
@@ -79,15 +61,7 @@ const Footer = () => (
                 >
                   About Us
                 </Link>
-              </li>
-              <li className="list-group-item bg-dark text-white border-light">
-                <Link
-                  to="/contact"
-                  className="text-decoration-none text-white stretched-link"
-                >
-                  Contact Us
-                </Link>
-              </li>
+              </li>              
               <li className="list-group-item bg-dark text-white border-light">
                 <Link
                   to="/help"
@@ -95,15 +69,7 @@ const Footer = () => (
                 >
                   Help
                 </Link>
-              </li>
-              <li className="list-group-item bg-dark text-white border-light">
-                <Link
-                  to="/privacy"
-                  className="text-decoration-none text-white stretched-link"
-                >
-                  Privacy
-                </Link>
-              </li>
+              </li>            
               <li className="list-group-item bg-dark text-white border-light">
                 <Link
                   to="/terms"
@@ -118,16 +84,16 @@ const Footer = () => (
             <div className="h6">Contact Info</div>
             <hr />
             <address>
-              <strong>Land Val.</strong>
+              <strong>CorpU University</strong>
               <br />
-              1355 Market St, Suite 900,
+              1355 Market St, Melbourne,
               <br />
-              Sri Lanka
+              Victoria
               <br />
             </address>
-            <IconTelephone /> +94 773265975
+            <IconTelephone /> +61 455125555
             <br />
-            <IconEnvelope /> landval@gmail.com
+            <IconEnvelope /> info@corpu.edu.au
             <br />
             <ul className="list-group">
               <li className="list-group-item bg-dark text-white border-0 p-0 m-0">
