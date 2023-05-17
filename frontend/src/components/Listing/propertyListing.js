@@ -4,12 +4,17 @@ import 'react-notifications/lib/notifications.css';
 import { Link } from 'react-router-dom';
 
 class Package extends Component {
+  setListing = (e) => {
+    localStorage.setItem('vacancy', JSON.stringify(this.props));
+  };
+
   render() {
     const { item } = this.props;
     return (
       <div key={item.public_id}>
         <Link
           style={{ margin: '0', padding: '0' }}
+          onClick={this.setListing}
           to={`/property/${item.public_id}`}
           className="nav-link"
         >

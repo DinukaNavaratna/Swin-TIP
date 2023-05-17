@@ -24,20 +24,13 @@ class PropertyListView extends Component {
   loadPage = () => {
     // get page details and items from api
     this.state.loading = true;
-    fetch(`${process.env.REACT_APP_BACK_END_URL}/vacancies`, {
+    fetch(`${process.env.REACT_APP_BACK_END_URL}/publicvacancies`, {
       method: 'GET',
-      headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4Mzc4ODA5MiwianRpIjoiNjUxMjRiMjEtODAzOS00M2U0LWFlMTAtMjFkMjc1NTk1OGE5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjAwN2E3MWE5OGNmMGViYTc0ZGJkODNlNTUyNTVlNDA4IiwibmJmIjoxNjgzNzg4MDkyLCJleHAiOjE2ODQzOTI4OTJ9.xGpZnAFxT9FrpsiSqd0X4ahWwTrK9AKYVcNB0tOzr68',
-      },
     })
       .then((response) => response.json())
       .then(({ response, vacancies }) => {
-        if (vacancies) {
-          this.state.loading = false;
-          vacancies = vacancies[0]['public_vacancies'];
-          this.setState({ response, vacancies });
-        }
+        this.state.loading = false;
+        this.setState({ response, vacancies });
       })
       .catch((err) => {
         this.state.loading = false;
@@ -59,20 +52,13 @@ class PropertyListView extends Component {
 
     if (this.state.vacancies.length > 0) {
       this.state.loading = true;
-      fetch(`${process.env.REACT_APP_BACK_END_URL}/vacancies`, {
+      fetch(`${process.env.REACT_APP_BACK_END_URL}/publicvacancies`, {
         method: 'GET',
-        headers: {
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4Mzc4ODA5MiwianRpIjoiNjUxMjRiMjEtODAzOS00M2U0LWFlMTAtMjFkMjc1NTk1OGE5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjAwN2E3MWE5OGNmMGViYTc0ZGJkODNlNTUyNTVlNDA4IiwibmJmIjoxNjgzNzg4MDkyLCJleHAiOjE2ODQzOTI4OTJ9.xGpZnAFxT9FrpsiSqd0X4ahWwTrK9AKYVcNB0tOzr68',
-        },
       })
         .then((response) => response.json())
         .then(({ response, vacancies }) => {
-          if (vacancies) {
-            this.state.loading = false;
-            vacancies = vacancies[0]['public_vacancies'];
-            this.setState({ response, vacancies });
-          }
+          this.state.loading = false;
+          this.setState({ response, vacancies });
         })
         .catch((err) => {
           this.state.loading = false;
