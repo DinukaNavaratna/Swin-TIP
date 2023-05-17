@@ -7,13 +7,13 @@ class Package extends Component {
   render() {
     const { item } = this.props;
     return (
-      <div key={item._id}>
+      <div key={item.public_id}>
         <Link
           style={{ margin: '0', padding: '0' }}
-          to={`/property/${item._id}`}
+          to={`/property/${item.public_id}`}
           className="nav-link"
         >
-          <div className="container rounded-0 border border-warning p-0">
+          <div className="container  border border-warning p-0 rounded">
             <div className="container p-0">
               <div className="row col-md-12 p-0 m-0">
                 <div className="col-md-4">
@@ -22,7 +22,12 @@ class Package extends Component {
                     alt="packageImg"
                     height="100%"
                     width="100%"
-                    src={`${process.env.REACT_APP_BACK_END_URL}/${item.files[0].filePath}`}
+                    src={`${
+                      item.module in
+                      ['1', '2', '3', '3', '4', '5', '6', '7', '8', '9', '10']
+                        ? `/images/module_img/${item.module}.jpg`
+                        : `/images/module_img/10.jpg`
+                    }`}
                   />
                   <br />
                 </div>
@@ -31,15 +36,16 @@ class Package extends Component {
                     {item.title}
                   </h4>
                   <h6 className="font-weight-bold text-left text-dark">
-                    {item.size} {item.sizeType}
+                    Description: <br />
+                    {item.description}
                   </h6>
                   <h6 className="font-weight-bold text-left text-secondary">
-                    {item.region},{item.propertyType}
+                    Qualifications: <br />
+                    {item.qualifications}
                   </h6>
-                  <h5 className="font-weight-bold text-left text-info">
-                    Rs {item.price}
-                    .00
-                  </h5>
+                  <div className="font-weight-bold text-left text-dark small-style-font">
+                    Publish Date: {item.publish_date}
+                  </div>
                 </div>
               </div>
             </div>

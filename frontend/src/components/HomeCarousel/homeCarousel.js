@@ -14,27 +14,12 @@ class HomeCarousel extends Component {
       >
         <div>
           <img src="../../images/banner/banner1.jpg" />
-          <p className="legend font-weight-bolder">
-            <Link to="/analyzer" className="nav-link text-white">
-              Tourism Property Valuation
-            </Link>
-          </p>
         </div>
         <div>
           <img src="../../images/banner/banner3.jpg" />
-          <p className="legend font-weight-bolder">
-            <Link to="/listing" className="nav-link text-white">
-              Tourism Property Listing
-            </Link>
-          </p>
         </div>
         <div>
           <img src="../../images/banner/banner2.jpg" />
-          <p className="legend font-weight-bolder">
-            <Link to="/analyzer" className="nav-link text-white">
-              Answers Investor Questions
-            </Link>
-          </p>
         </div>
       </Carousel>
     );

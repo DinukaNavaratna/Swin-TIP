@@ -14,22 +14,23 @@ const Footer = () => (
             <div className="h6">CorpU University</div>
             <hr />
             <p>
-            CorpU University Is One Of The Leading Accredited Universities in Australia
-            That Provide Quality Education To Their Students. CorpU University Has Three
-            Campuses Around Australia. One in Perth, Another One in Sydney and The Main Campus
-            Located in Center of Melbourne. 
+              CorpU University Is One Of The Leading Accredited Universities in
+              Australia That Provide Quality Education To Their Students. CorpU
+              University Has Three Campuses Around Australia. One in Perth,
+              Another One in Sydney and The Main Campus Located in Center of
+              Melbourne.
             </p>
           </div>
           <div className="col-md-3 py-3">
             <div className="h6">Services</div>
             <hr />
-            <ul className="list-group list-group-flush">            
+            <ul className="list-group list-group-flush">
               <li className="list-group-item bg-dark text-white border-light">
                 <Link
                   to="/listing"
                   className="text-decoration-none text-white stretched-link"
                 >
-                  Listing
+                  Job Vacancy
                 </Link>
               </li>
               <li className="list-group-item bg-dark text-white border-light">
@@ -39,7 +40,7 @@ const Footer = () => (
                 >
                   Post Ad
                 </Link>
-              </li>              
+              </li>
               <li className="list-group-item bg-dark text-white border-light">
                 <Link
                   to="/register"
@@ -61,7 +62,7 @@ const Footer = () => (
                 >
                   About Us
                 </Link>
-              </li>              
+              </li>
               <li className="list-group-item bg-dark text-white border-light">
                 <Link
                   to="/help"
@@ -69,7 +70,7 @@ const Footer = () => (
                 >
                   Help
                 </Link>
-              </li>            
+              </li>
               <li className="list-group-item bg-dark text-white border-light">
                 <Link
                   to="/terms"

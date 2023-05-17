@@ -49,7 +49,7 @@ class NavigationBar extends Component {
             <NavItem>
               <Link to={'/profile'} className="nav-link">
                 {' '}
-                <button className="btn btn-warning">                 
+                <button className="btn btn-warning">
                   <strong> {user ? `Hi ${user.id}` : null} </strong>
                 </button>
               </Link>
@@ -125,9 +125,9 @@ class NavigationBar extends Component {
                       <MenuIcon className="mb-1" />
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem header>Services</DropdownItem>                      
+                      <DropdownItem header>Services</DropdownItem>
                       <DropdownItem tag={Link} to="/listing">
-                        Listing
+                        Job Vacancy
                       </DropdownItem>
                       <DropdownItem tag={Link} to="/postAd">
                         Post Ad
@@ -139,7 +139,7 @@ class NavigationBar extends Component {
                       <DropdownItem header>Other</DropdownItem>
                       <DropdownItem tag={Link} to="/about">
                         About Us
-                      </DropdownItem>                      
+                      </DropdownItem>
                       <DropdownItem tag={Link} to="/help">
                         Help
                       </DropdownItem>

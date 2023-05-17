@@ -1,12 +1,12 @@
 export const data = {
   iconProducts: [
     {
-      to: '/analyzer',
+      to: '/listing',
       img: 'analyzer',
-      title: 'Listing',
+      title: 'Job Vacancy',
       text: 'Job Vacancy Listing',
       cssClass: 'display-1 text-primary',
-    },   
+    },
     {
       to: '/postAd',
       img: 'postAd',
