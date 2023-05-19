@@ -8,7 +8,11 @@ if (isset($_GET['new']) && $_GET['new'] == "true") {
     $new = false;
 }
 
-$type = $_SESSION['type'];
+if (isset($_SESSION['type'])){
+    $type = $_SESSION['type'];
+} else {
+    $type = "guest";
+}
 
 if (!isset($_GET['id']) && !($new && $type == "Permanent")) {
     header("Location:vacancies.php");

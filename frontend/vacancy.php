@@ -69,14 +69,10 @@ require 'php/vacancy.php';
                 <div class="col-12">
                     <?php
                     if ($type == "Casual") {
-                        if (isset($_SESSION['id'])) {
-                            if ($applied) { ?>
-                                <button class="btn btn-primary w-100" disabled>You have already applied to this vacancy</button>
-                            <?php } else { ?>
-                                <button class="btn btn-primary w-100" onclick="apply();">Apply Now</button>
-                            <?php }
-                        } else { ?>
-                            <button class="btn btn-primary w-100" onclick="window.open('login.php', '_self');">Log in to apply</button>
+                        if ($applied) { ?>
+                            <button class="btn btn-primary w-100" disabled>You have already applied to this vacancy</button>
+                        <?php } else { ?>
+                            <button class="btn btn-primary w-100" onclick="apply();">Apply Now</button>
                         <?php }
                     } else if ($type == "Permanent") {
                         if ($new) { ?>
@@ -94,8 +90,10 @@ require 'php/vacancy.php';
                                 <button class="btn btn-secondary w-50" style="margin-left:25%;" onclick="update('publish');">Publish Vacancy</button>
                             <?php } ?>
                         <?php }
-                    } else { ?>
+                    } else if ($type == "Admin") { ?>
                         <button class="btn btn-primary w-100" disabled>Admins cannot apply or edit vacancies</button>
+                    <?php } else { ?>
+                        <button class="btn btn-primary w-100" onclick="window.open('login.php', '_self');">Log in to apply</button>
                     <?php } ?>
                 </div>
             </div>
