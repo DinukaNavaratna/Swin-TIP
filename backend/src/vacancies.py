@@ -22,7 +22,17 @@ class PublicVacancies(Resource):
         logger.debug("------------------------------------------------")
         logger.info('/PublicVacancies (get) - '+str(request.remote_addr))
 
-        search_response = Select("public_id, title, module, base, location, description, qualifications, num_applicants, publish_date", "vacancies", " where status=1", 0)
+        try:
+            request_body = request.json
+            count = request_body["count"]
+            offset = (5*count)-5
+            limit_offset = " LIMIT 5 OFFSET "+str(offset)
+        except Exception as exception:
+            limit_offset = ""
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
+
+        search_response = Select("public_id, title, module, base, location, description, qualifications, num_applicants, publish_date, salary, due", "vacancies", " WHERE status=1"+limit_offset, 0)
 
         if(search_response == None):
             return {"response": "failed", "message": "Vacancies not found!"}, 200
@@ -31,14 +41,41 @@ class PublicVacancies(Resource):
             response["response"] = "success"
             vacancies = []
             for vacancy in search_response:
-                
-                vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":str(vacancy[3]), "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "publish_date":str(vacancy[8])})
+                if str(vacancy[3]) == "0":
+                    base = "Full Time"
+                elif str(vacancy[3]) == "1":
+                    base = "Part Time"
+                elif str(vacancy[3]) == "2":
+                    base = "Casual"
+                vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":base, "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "publish_date":str(vacancy[8]), "salary":str(vacancy[9]), "due":str(vacancy[10])})
             response["vacancies"] = vacancies
             return response
         else:
             logger.info("Vacancies retrieve failed")
             return {"response": "failed", "message": "Vacancies retrieve failed!", "description": str(search_response)}, 200
-            
+
+
+class VacancyDetails(Resource):
+    def get(self, id):
+        logger.debug("------------------------------------------------")
+        logger.info('/VacancyDetails (get) - '+str(request.remote_addr))
+
+        vacancy = Select("vacancies.title, modules.name, vacancies.base, vacancies.location, vacancies.description, vacancies.qualifications, vacancies.num_applicants, vacancies.publish_date, vacancies.salary, vacancies.due, vacancies.edit_date, vacancies.status", "vacancies", " INNER JOIN modules ON vacancies.module = modules.id WHERE public_id='"+id+"';", 1)
+
+        if(vacancy == None):
+            return {"response": "failed", "message": "Vacancies not found!"}, 200
+        elif(type(vacancy) is tuple):
+            if str(vacancy[2]) == "0":
+                base = "Full Time"
+            elif str(vacancy[2]) == "1":
+                base = "Part Time"
+            elif str(vacancy[2]) == "2":
+                base = "Casual"
+            return {"response": "success", "title":str(vacancy[0]), "module":str(vacancy[1]), "base":base, "location":str(vacancy[3]), "description":str(vacancy[4]), "qualifications":str(vacancy[5]), "num_applicants":str(vacancy[6]), "publish_date":str(vacancy[7]), "salary":str(vacancy[8]), "due":str(vacancy[9]), "edit_date":str(vacancy[10]), "status":str(vacancy[11])}
+        else:
+            logger.info("Vacancies retrieve failed")
+            return {"response": "failed", "message": "Vacancies retrieve failed!", "description": str(vacancy)}, 200
+
 
 class Vacancies(Resource):
     @jwt_required()
@@ -62,7 +99,7 @@ class Vacancies(Resource):
             logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
             return {"response": "error", "message": "Unauthorized access!"}, 403
 
-        search_response = Select("public_id, title, module, base, location, description, qualifications, num_applicants, published_by, publish_date, last_edited_by, edit_date, status", "vacancies", "", 0)
+        search_response = Select("public_id, title, module, base, location, description, qualifications, num_applicants, published_by, publish_date, last_edited_by, edit_date, status, salary, due", "vacancies", "", 0)
 
         if(search_response == None):
             return {"response": "failed", "message": "Vacancies not found!"}, 200
@@ -72,11 +109,17 @@ class Vacancies(Resource):
             public_vacancies = []
             deleted_vacancies = []
             for vacancy in search_response:
+                if str(vacancy[3]) == "0":
+                    base = "Full Time"
+                elif str(vacancy[3]) == "1":
+                    base = "Part Time"
+                elif str(vacancy[3]) == "2":
+                    base = "Casual"
                 if vacancy[12] == 1:
-                    public_vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":str(vacancy[3]), "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "published_by":str(vacancy[8]), "publish_date":str(vacancy[9]), "last_edited_by":str(vacancy[10]), "edit_date":str(vacancy[11])})
+                    public_vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":str(vacancy[3]), "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "published_by":str(vacancy[8]), "publish_date":str(vacancy[9]), "last_edited_by":str(vacancy[10]), "edit_date":str(vacancy[11]), "salary":str(vacancy[12]), "due":str(vacancy[13])})
                 else:
-                    deleted_vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":str(vacancy[3]), "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "published_by":str(vacancy[8]), "publish_date":str(vacancy[9]), "last_edited_by":str(vacancy[10]), "edit_date":str(vacancy[11])})
-            response["vacancies"] = [{"public_vacancies":public_vacancies, "deleted_vacancies":deleted_vacancies}]
+                    deleted_vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":str(vacancy[3]), "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "published_by":str(vacancy[8]), "publish_date":str(vacancy[9]), "last_edited_by":str(vacancy[10]), "edit_date":str(vacancy[11]), "salary":str(vacancy[12]), "due":str(vacancy[13])})
+            response["vacancies"] = {"public_vacancies":public_vacancies, "deleted_vacancies":deleted_vacancies}
             return response
         else:
             logger.info("Vacancies retrieve failed")
@@ -226,7 +269,6 @@ class Vacancies(Resource):
             return {"response": "failed", "message": "Vacancy delete failed!", "description": str(update_response)}, 200
 
 
-
 class Modules(Resource):
     def get(self):
         logger.debug("------------------------------------------------")
@@ -242,7 +284,7 @@ class Modules(Resource):
             modules = []
             for module in search_response:
                 modules.append({"id":str(module[0]), "name":str(module[1])})
-            response["vacancies"] = modules
+            response["modules"] = modules
             return response
         else:
             logger.info("Modules retrieve failed")
@@ -301,6 +343,7 @@ class ApplyVacancy(Resource):
                 exc_type, exc_obj, exc_tb = sys.exc_info()
                 logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
                 msg = "Notification emailed failed. "+str(exception)
+            update_response = Update("vacancies", "num_applicants = num_applicants + 1", "id='"+str(vacancy_id)+"'")
             return {"response": "success", "message": msg}, 200
         else:
             logger.info("Application failed\n"+str(initialize_response))
@@ -326,12 +369,20 @@ class ViewApplicants(Resource):
             else:
                 logger.info("Unauthorized access - "+user_id+"\n"+str(search_response))
                 return {"response": "failed", "message": "Unauthorized access!", "description": str(search_response)}, 200
+            request_body = request.json
+            vac_id = request_body["vac_id"]
+            user_id = request_body["user_id"]
+            where = ""
+            if vac_id != "":
+                where = " WHERE vacancies.public_id = '"+vac_id+"'"
+            elif user_id != "":
+                where = " WHERE users.public_id = '"+user_id+"'"
         except Exception as exception:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
             return {"response": "error", "message": "Unauthorized access!"}, 403
 
-        search_response = Select("users.f_name, users.l_name, users.email, users.public_id, vacancies.title, modules.name, applicants.date", "applicants", " INNER JOIN users ON applicants.user_id = users.id INNER JOIN vacancies ON applicants.vacancy_id = vacancies.id INNER JOIN modules ON vacancies.module = modules.id;", 0)
+        search_response = Select("users.f_name, users.l_name, users.email, users.public_id, vacancies.title, modules.name, applicants.date, vacancies.public_id", "applicants", " INNER JOIN users ON applicants.user_id = users.id INNER JOIN vacancies ON applicants.vacancy_id = vacancies.id INNER JOIN modules ON vacancies.module = modules.id"+where+";", 0)
 
         if(search_response == None):
             return {"response": "failed", "message": "No applicants!"}, 200
@@ -340,7 +391,7 @@ class ViewApplicants(Resource):
             response["response"] = "success"
             applicants = []
             for applicant in search_response:
-                applicants.append({"f_name":str(applicant[0]), "l_name":str(applicant[1]), "email":str(applicant[2]), "public_id":str(applicant[3]), "title":str(applicant[4]), "module":str(applicant[5]), "date":str(applicant[6])})
+                applicants.append({"f_name":str(applicant[0]), "l_name":str(applicant[1]), "email":str(applicant[2]), "public_id":str(applicant[3]), "title":str(applicant[4]), "module":str(applicant[5]), "applied_date":str(applicant[6]), "vacancy_id":str(applicant[7])})
             response["applicants"] = applicants
             return response
         else:

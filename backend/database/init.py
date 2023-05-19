@@ -43,9 +43,10 @@ def CreateTables():
   email VARCHAR(50) UNIQUE,
   password VARCHAR(32),
   public_id VARCHAR(32) UNIQUE,
-  user_type INT(1) DEFAULT 0 COMMENT '0-casual, 1-permanent, 2-admin',
+  user_type INT(1) DEFAULT 0 COMMENT '0-Casual, 1-Permanent, 2-Admin',
   status INT(1) DEFAULT 0 COMMENT '0-pending, 1-active, 2-deactivated',
   last_edit_on VARCHAR(10) DEFAULT(CURRENT_DATE),
+  cv INT(1) DEFAULT 0,
   PRIMARY KEY (id))""")
 
   cursor.execute("""CREATE TABLE IF NOT EXISTS vacancies (
@@ -57,12 +58,14 @@ def CreateTables():
   location VARCHAR(50),
   description VARCHAR(50),
   qualifications VARCHAR(50),
+  salary VARCHAR(10) DEFAULT('Negotiable'),
+  due VARCHAR(10),
   num_applicants INT(3) DEFAULT 0,
   published_by INT(1) COMMENT 'users table ref',
   publish_date VARCHAR(10) DEFAULT(CURRENT_DATE),
   last_edited_by INT(1) COMMENT 'users table ref',
   edit_date VARCHAR(10) DEFAULT(CURRENT_DATE),
-  status INT(1) DEFAULT 1 COMMENT '1-live, 2-Deleted',
+  status INT(1) DEFAULT 1 COMMENT '1-live, 2-unpublished',
   PRIMARY KEY (id))""")
 
   cursor.execute("""CREATE TABLE IF NOT EXISTS modules (
@@ -144,16 +147,16 @@ def DummyData():
   ('Engineering');
   """)
 
-  cursor.execute("""INSERT IGNORE INTO vacancies (public_id, title, module, base, location, description, qualifications, published_by, last_edited_by) VALUES 
-  ('1146b6c258a28b28941c57851ee084a1', 'Title 1', 1, 1, 'AU', 'Description 1', 'Qualifications 1', 5, 2),
-  ('1146b6c258a28b28241c57851ee084a1', 'Title 2', 2, 1, 'AU', 'Description 2', 'Qualifications 2', 2, 4),
-  ('1146b6c258a28b28441c57851ee084a1', 'Title 3', 3, 1, 'AU', 'Description 3', 'Qualifications 3', 2, 2),
-  ('1146b6c258a28b28541c57851ee084a1', 'Title 4', 4, 1, 'AU', 'Description 4', 'Qualifications 4', 2, 4),
-  ('1146b6c258a28b28641c57851ee084a1', 'Title 5', 1, 1, 'AU', 'Description 5', 'Qualifications 5', 2, 2),
-  ('1146b6c258a28b28741c57851ee084a1', 'Title 6', 2, 1, 'AU', 'Description 6', 'Qualifications 6', 2, 2),
-  ('1146b6c258a28b28841c57851ee084a1', 'Title 7', 3, 1, 'AU', 'Description 7', 'Qualifications 7', 2, 4),
-  ('1146b6c258a28b28941c57851ee084a1', 'Title 8', 3, 1, 'AU', 'Description 8', 'Qualifications 8', 2, 2),
-  ('1146b6c258a28b28041c57851ee084a1', 'Title 9', 4, 1, 'AU', 'Description 9', 'Qualifications 9', 2, 2);
+  cursor.execute("""INSERT IGNORE INTO vacancies (public_id, title, module, base, location, description, qualifications, published_by, last_edited_by, salary, due) VALUES 
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 1', 1, 1, 'AU', 'Description 1', 'Qualifications 1', 5, 2, "$35/hr", "2023-06-30"),
+  ('1146b6c258a28b28241c57851ee084a1', 'Title 2', 2, 1, 'AU', 'Description 2', 'Qualifications 2', 2, 4, "$25/hr", "2023-06-30"),
+  ('1146b6c258a28b28441c57851ee084a1', 'Title 3', 3, 1, 'AU', 'Description 3', 'Qualifications 3', 2, 2, "$33/hr", "2023-06-30"),
+  ('1146b6c258a28b28541c57851ee084a1', 'Title 4', 4, 1, 'AU', 'Description 4', 'Qualifications 4', 2, 4, "$12/hr", "2023-06-30"),
+  ('1146b6c258a28b28641c57851ee084a1', 'Title 5', 1, 1, 'AU', 'Description 5', 'Qualifications 5', 2, 2, "$23/hr", "2023-06-30"),
+  ('1146b6c258a28b28741c57851ee084a1', 'Title 6', 2, 1, 'AU', 'Description 6', 'Qualifications 6', 2, 2, "$34/hr", "2023-06-30"),
+  ('1146b6c258a28b28841c57851ee084a1', 'Title 7', 3, 1, 'AU', 'Description 7', 'Qualifications 7', 2, 4, "$43/hr", "2023-06-30"),
+  ('1146b6c258a28b28941c57851ee084a1', 'Title 8', 3, 1, 'AU', 'Description 8', 'Qualifications 8', 2, 2, "$56/hr", "2023-06-30"),
+  ('1146b6c258a28b28041c57851ee084a1', 'Title 9', 4, 1, 'AU', 'Description 9', 'Qualifications 9', 2, 2, "$24/hr", "2023-06-30");
   """)
 
   db.commit()
