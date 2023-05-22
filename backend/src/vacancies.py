@@ -116,9 +116,9 @@ class Vacancies(Resource):
                 elif str(vacancy[3]) == "2":
                     base = "Casual"
                 if vacancy[12] == 1:
-                    public_vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":str(vacancy[3]), "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "published_by":str(vacancy[8]), "publish_date":str(vacancy[9]), "last_edited_by":str(vacancy[10]), "edit_date":str(vacancy[11]), "salary":str(vacancy[12]), "due":str(vacancy[13])})
+                    public_vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":base, "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "published_by":str(vacancy[8]), "publish_date":str(vacancy[9]), "last_edited_by":str(vacancy[10]), "edit_date":str(vacancy[11]), "salary":str(vacancy[13]), "due":str(vacancy[14])})
                 else:
-                    deleted_vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":str(vacancy[3]), "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "published_by":str(vacancy[8]), "publish_date":str(vacancy[9]), "last_edited_by":str(vacancy[10]), "edit_date":str(vacancy[11]), "salary":str(vacancy[12]), "due":str(vacancy[13])})
+                    deleted_vacancies.append({"public_id":str(vacancy[0]), "title":str(vacancy[1]), "module":str(vacancy[2]), "base":base, "location":str(vacancy[4]), "description":str(vacancy[5]), "qualifications":str(vacancy[6]), "num_applicants":str(vacancy[7]), "published_by":str(vacancy[8]), "publish_date":str(vacancy[9]), "last_edited_by":str(vacancy[10]), "edit_date":str(vacancy[11]), "salary":str(vacancy[13]), "due":str(vacancy[14])})
             response["vacancies"] = {"public_vacancies":public_vacancies, "deleted_vacancies":deleted_vacancies}
             return response
         else:

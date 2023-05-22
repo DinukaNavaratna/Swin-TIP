@@ -49,19 +49,24 @@ class UserProfile(Resource):
                 logger.info("Unauthorized access - "+user_id+"\n"+str(search_response))
                 return {"response": "failed", "message": "Unauthorized access!", "description": str(search_response)}, 200
 
-        search_response = Select("f_name, l_name, bday, edu_q, prof_q, email, status, last_edit_on, cv, user_type", "users", " WHERE public_id='"+public_id+"' LIMIT 1", 1)
+        search_response = Select("f_name, l_name, bday, edu_q, prof_q, email, status, last_edit_on, cv, user_type, availability, id", "users", " WHERE public_id='"+public_id+"' LIMIT 1", 1)
 
         if(search_response == None):
             return {"response": "failed", "message": "User not found!"}, 200
         elif(type(search_response) is tuple):
             user_type = search_response[9]
+            jobs = []
             if user_type == 0:
                 user_type = "Casual"
             elif user_type == 1:
                 user_type = "Permanent"
+                job_response = Select("title, public_id", "vacancies", " WHERE published_by="+str(search_response[11]), 0)
+                if(type(job_response) is list):
+                    for job in job_response:
+                        jobs.append({"title":str(job[0]), "id":str(job[1])})
             elif user_type == 2:
                 user_type = "Admin"
-            return {"f_name":search_response[0], "l_name":search_response[1], "bday":search_response[2], "edu_q":search_response[3], "prof_q":search_response[4], "email":search_response[5], "status":search_response[6], "last_edit_on":search_response[7], "cv":search_response[8], "user_type":user_type, "dp":"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"}, 200
+            return {"f_name":search_response[0], "l_name":search_response[1], "bday":search_response[2], "edu_q":search_response[3], "prof_q":search_response[4], "email":search_response[5], "status":search_response[6], "last_edit_on":search_response[7], "cv":search_response[8], "user_type":user_type, "availability":search_response[10], "dp":"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png", "jobs":jobs}, 200
         else:
             logger.info("User profile details retrieve failed - ")
             return {"response": "failed", "message": "User profile details retrieve failed!", "description": str(search_response)}, 200
