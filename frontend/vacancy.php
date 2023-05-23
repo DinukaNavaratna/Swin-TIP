@@ -24,7 +24,7 @@ require 'php/vacancy.php';
         <div class="row gy-5 gx-4">
             <div class="col-lg-8">
                 <div class="d-flex align-items-center mb-5">
-                    <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-2.jpg" alt="" style="width: 80px; height: 80px;">
+                    <img class="flex-shrink-0 img-fluid border rounded" src="img/logo.jpg" alt="" style="width: 80px; height: 80px;">
                     <div class="text-start ps-4">
                         <?php if ($edit) { ?>
                             <h3 class="mb-3"><input type="text" <?php if ($new) {
@@ -56,23 +56,20 @@ require 'php/vacancy.php';
                                                                                     } ?>><?php echo $vacancy_qualifications; ?></textarea>
                     <?php } else { ?>
                         <p style="text-align: justify;"><?php echo $vacancy_qualifications; ?></p>
-                        <ul class="list-unstyled">
-                            <li><i class="fa fa-angle-right text-primary me-2"></i>CorpU - SwinTIP</li>
-                            <li><i class="fa fa-angle-right text-primary me-2"></i>CorpU - SwinTIP</li>
-                            <li><i class="fa fa-angle-right text-primary me-2"></i>CorpU - SwinTIP</li>
-                            <li><i class="fa fa-angle-right text-primary me-2"></i>CorpU - SwinTIP</li>
-                            <li><i class="fa fa-angle-right text-primary me-2"></i>CorpU - SwinTIP</li>
-                        </ul>
+                        <br>
                     <?php } ?>
                 </div>
 
                 <div class="col-12">
                     <?php
                     if ($type == "Casual") {
+                        if ($_SESSION['profileCompleted'] == true) {
                         if ($applied) { ?>
                             <button class="btn btn-primary w-100" disabled>You have already applied to this vacancy</button>
                         <?php } else { ?>
                             <button class="btn btn-primary w-100" onclick="apply();">Apply Now</button>
+                        <?php } } else { ?>
+                            <button class="btn btn-primary w-100" onclick="window.open('profile.php', '_self');">Complete your user profile to apply</button>
                         <?php }
                     } else if ($type == "Permanent") {
                         if ($new) { ?>
@@ -146,8 +143,8 @@ require 'php/vacancy.php';
                     <?php } ?>
                 </div>
                 <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s">
-                    <h4 class="mb-4">CorpU</h4>
-                    <p class="m-0">Small paragraph about CorpU.</p>
+                    <h4 class="mb-4" style="text-align:center;">CorpU</h4>
+                    <p class="m-0" style="text-align:justify;">CorpU was founded in 2020 to meet the growing needs for Technical Professionals in Australia. We offer a diverse range of courses taught by passionate staff to meet industry needs and provide our students a launchpad for their careers.</p>
                 </div>
             </div>
         </div>

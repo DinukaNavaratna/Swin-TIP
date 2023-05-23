@@ -32,22 +32,22 @@ require 'php/applications.php';
                             <div class="row g-4">
                                 <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                     <div class="text-start ps-4">
-                                        <h5 class="mb-3">Applicant: <?php echo $application['f_name']." ".$application['l_name']; ?></h5>
-                                        <span class="text-truncate me-3"><i class="fa fa-envelope text-primary me-2"></i><?php echo $application['email']; ?></span>
-                                        <br><br>
                                         <h5 class="mb-3">Vacancy: <?php echo $application['title']; ?></h5>
                                         <span class="text-truncate me-3"><i class="fa fa-book text-primary me-2"></i><?php echo $application['module']; ?></span>
+                                        <br><br>
+                                        <h5 class="mb-3">Applicant: <?php echo $application['f_name']." ".$application['l_name']; ?></h5>
+                                        <span class="text-truncate me-3"><i class="fa fa-envelope text-primary me-2"></i><?php echo $application['email']; ?></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                     <div class="d-flex mb-3">
+                                        <a class="btn btn-primary" href="vacancy.php?id=<?php echo $application['vacancy_id']; ?>" target="_blank">View Vacancy&nbsp;&nbsp;<i class="fa fa-external-link-alt fa-xs"></i></a>
+                                    </div>
+                                    <br>
+                                    <div class="d-flex mb-3">
                                         <a class="btn btn-primary" href="profile.php?id=<?php echo $application['public_id']; ?>" target="_blank">View Profile&nbsp;&nbsp;<i class="fa fa-external-link-alt fa-xs"></i></a>
                                     </div>
                                     <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Applied on: <?php echo $application['applied_date']; ?></small>
-                                    <br>
-                                    <div class="d-flex mb-3">
-                                        <a class="btn btn-primary" href="vacancy.php?id=<?php echo $application['vacancy_id']; ?>" target="_blank">View Vacancy&nbsp;&nbsp;<i class="fa fa-external-link-alt fa-xs"></i></a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
