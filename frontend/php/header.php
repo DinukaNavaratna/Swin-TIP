@@ -12,7 +12,7 @@ session_start();
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="img/favicon.jpg" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,10 +27,8 @@ session_start();
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 </head>
 
@@ -79,7 +77,7 @@ session_start();
                     <a href="index.php" class="nav-item nav-link<?php echo $home_active; ?>">Home</a>
                     <a href="vacancies.php" class="nav-item nav-link<?php echo $job_active; ?>">Job List</a>
                     <?php if (isset($_SESSION['type']) && $_SESSION['type'] == "Permanent") {
-                        ?>
+                    ?>
                         <a href="applications.php" class="nav-item nav-link<?php echo $applications_active; ?>">Applications</a>
                     <?php } ?>
                     <a href="about.php" class="nav-item nav-link<?php echo $about_active; ?>">About</a>
@@ -88,15 +86,13 @@ session_start();
                 <?php
                 if (isset($_SESSION['id'])) {
                     $own_profile = false;
-                    if ($_SESSION['type'] == "Permanent") {
-                        if ((!isset($_GET['id'])) || (isset($_GET['id']) && $_GET['id'] == $_SESSION["id"])) {
-                            $own_profile = true;
-                        }
+                    if ((!isset($_GET['id'])) || (isset($_GET['id']) && $_GET['id'] == $_SESSION["id"])) {
+                        $own_profile = true;
                     }
                     if ((strpos($uri, 'profile') !== false) && $own_profile) {
                         echo '<a href="login.php?logout=true" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Logout<i class="fa fa-arrow-right ms-3"></i></a>';
                     } else {
-                        echo '<a href="profile.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Hello, '.$_SESSION['fname'].'<i class="fa fa-arrow-right ms-3"></i></a>';
+                        echo '<a href="profile.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Hello, ' . $_SESSION['fname'] . '<i class="fa fa-arrow-right ms-3"></i></a>';
                     }
                 } else if (strpos($uri, 'login') !== false) {
                     echo '<a href="register.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Register<i class="fa fa-arrow-right ms-3"></i></a>';

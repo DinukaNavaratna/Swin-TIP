@@ -20,7 +20,8 @@ if (isset($_POST['func'])) {
 function CallAPI($method, $endpoint, $data, $access_token)
 {
     $url = 'https://api.corputip.me/' . $endpoint;
-    if($endpoint == "userprofile" && $method == "PUT") {
+
+    if ($endpoint == "userprofile" && $method == "PUT") {
         $content_type = "multipart/form-data";
     } else {
         $content_type = "application/json";
@@ -65,32 +66,38 @@ function update_profile()
     $token = $_POST['token'];
     $id = $_POST['id'];
     $resume = $_POST['resume'];
+    $availability = $_POST['availability'];
 
     $data = [];
-    
-    if($f_name != "") {
+
+    if ($f_name != "") {
         $data['f_name'] = $f_name;
     }
-    if($l_name != "") {
+    if ($l_name != "") {
         $data['l_name'] = $l_name;
     }
-    if($bday != "") {
+    if ($bday != "") {
         $data['bday'] = $bday;
     }
-    if($edu_q != "") {
+    if ($edu_q != "") {
         $data['edu_q'] = $edu_q;
     }
-    if($prof_q != "") {
+    if ($prof_q != "") {
         $data['prof_q'] = $prof_q;
     }
-    if($resume != "") {
+    if ($resume != "") {
         $data['resume'] = $resume;
     }
+    if ($availability != "") {
+        $data['availability'] = $availability;
+    }
 
-    $response = CallAPI("PUT", "userprofile/".$id, $data, $token);
+    $response = CallAPI("PUT", "userprofile/" . $id, $data, $token);
     if ($response['response'] == "success") {
-        session_start();
-        $_SESSION['fname'] = $f_name;
+        if ($f_name != "") {
+            session_start();
+            $_SESSION['fname'] = $f_name;
+        }
         echo "success";
     } else {
         print_r($response);
@@ -118,7 +125,8 @@ function login()
         $_SESSION['application_titles'] = $response['application_titles'];
         echo "success";
     } else {
-        print_r($response{"message"});
+        print_r($response{
+        "message"});
     }
 }
 
@@ -165,7 +173,7 @@ function apply()
 
 function vacancy($func)
 {
-    if($func == "update") {
+    if ($func == "update") {
         $method = "PUT";
     } else if ($func == "new") {
         $method = "POST";
@@ -183,35 +191,35 @@ function vacancy($func)
     $vacancy_status = $_POST['vacancy_status'];
 
     $data = [];
-    
-    if($vacancy_title != "") {
+
+    if ($vacancy_title != "") {
         $data['title'] = $vacancy_title;
     }
-    if($vacancy_description != "") {
+    if ($vacancy_description != "") {
         $data['description'] = $vacancy_description;
     }
-    if($vacancy_qualifications != "") {
+    if ($vacancy_qualifications != "") {
         $data['qualifications'] = $vacancy_qualifications;
     }
-    if($vacancy_module != "") {
+    if ($vacancy_module != "") {
         $data['module'] = $vacancy_module;
     }
-    if($vacancy_base != "") {
+    if ($vacancy_base != "") {
         $data['base'] = $vacancy_base;
     }
-    if($vacancy_salary != "") {
+    if ($vacancy_salary != "") {
         $data['salary'] = $vacancy_salary;
     }
-    if($vacancy_location != "") {
+    if ($vacancy_location != "") {
         $data['location'] = $vacancy_location;
     }
-    if($vacancy_due != "") {
+    if ($vacancy_due != "") {
         $data['due'] = $vacancy_due;
     }
-    if($public_id != "") {
+    if ($public_id != "") {
         $data['public_id'] = $public_id;
     }
-    if($vacancy_status != "") {
+    if ($vacancy_status != "") {
         $data['status'] = $vacancy_status;
     }
 

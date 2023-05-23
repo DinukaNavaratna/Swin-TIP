@@ -38,12 +38,12 @@ require 'php/header.php';
                 </div>
             </div>
             <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                <h1 class="mb-4">We Help To Get The Best Job And Find A Talent</h1>
-                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                <p><i class="fa fa-check text-primary me-3"></i>Tempor erat elitr rebum at clita</p>
-                <p><i class="fa fa-check text-primary me-3"></i>Aliqu diam amet diam et eos</p>
-                <p><i class="fa fa-check text-primary me-3"></i>Clita duo justo magna dolore erat amet</p>
-                <a class="btn btn-primary py-3 px-5 mt-3" href="">Read More</a>
+                <h1 class="mb-4">A Local University with A Global Impact</h1>
+                <p class="mb-4" style="text-align:justify;">CorpU was founded in 2020 to meet the growing needs for Technical Professionals in Australia. We offer a diverse range of courses taught by passionate staff to meet industry needs and provide our students a launchpad for their careers.
+                    <br>We are currently opening up teaching opportunities over our 3 campuses in Darwin, Melbourne and Sydney. We offer:</p>
+                <p><i class="fa fa-check text-primary me-3"></i>Competitive Salaries </p>
+                <p><i class="fa fa-check text-primary me-3"></i>Career Advancement Opportunities</p>
+                <p><i class="fa fa-check text-primary me-3"></i>Generous Leave Entitlements</p>
             </div>
         </div>
     </div>
