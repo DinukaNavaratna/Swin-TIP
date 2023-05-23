@@ -1,11 +1,14 @@
 import boto3
 from loguru import logger
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 ses_client = boto3.client('ses', 
-                aws_access_key_id=os.getenv("SES_KEY_ID"), 
-                aws_secret_access_key=os.getenv("SES_KEY"), 
-                region_name=os.getenv("SES_REGION")
+                aws_access_key_id = os.getenv("SES_KEY_ID"), 
+                aws_secret_access_key = os.getenv("SES_KEY"), 
+                region_name = os.getenv("SES_REGION")
             )
 
 
