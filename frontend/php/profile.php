@@ -41,10 +41,10 @@ if (isset($_GET['edit']) && $_GET['edit'] == "true") {
 
 $availabilities = explode(",", $profile['availability']);
 
-if($profile['f_name'] != "" || $profile['l_name'] != "" || $profile['email'] != "" || $profile['bday'] != "" || $profile['availability'] != "" || $profile['edu_q'] != "" || $profile['prof_q'] != "" || $profile['cv'] != 1) {
-    $_SESSION['profileCompleted'] = true;
-} else {
+if($profile['f_name'] == "" || $profile['l_name'] == "" || $profile['email'] == "" || $profile['bday'] == "" || $profile['availability'] == "" || $profile['edu_q'] == "" || $profile['prof_q'] == "" || $profile['cv'] == 0) {
     $_SESSION['profileCompleted'] = false;
+} else {
+    $_SESSION['profileCompleted'] = true;
 }
 
 ?>

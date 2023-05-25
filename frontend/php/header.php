@@ -96,7 +96,7 @@ session_start();
                     }
                 } else if (strpos($uri, 'login') !== false) {
                     echo '<a href="register.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Register<i class="fa fa-arrow-right ms-3"></i></a>';
-                } else if (strpos($uri, 'register') !== false) {
+                } else if ((strpos($uri, 'register') !== false) || (strpos($uri, 'verification_code') !== false)) {
                     echo '<a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Login<i class="fa fa-arrow-right ms-3"></i></a>';
                 } else {
                     echo '<a href="login.php" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Register/ Login<i class="fa fa-arrow-right ms-3"></i></a>';

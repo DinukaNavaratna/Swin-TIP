@@ -13,6 +13,8 @@ if (isset($_POST['func'])) {
         vacancy("update");
     } else if ($_POST['func'] == "new_vacancy") {
         vacancy("new");
+    } else if ($_POST['func'] == "verificationemailrequest") {
+        verificationemailrequest();
     }
 }
 
@@ -147,7 +149,26 @@ function register()
     if ($response['response'] == "success") {
         echo "success";
     } else {
-        print_r($response);
+        if(str_contains($response{"description"}, 'email already exists')) {
+            echo "Account under the same email already exists. Please try logging in.";
+        } else {
+            print_r($response);
+        }
+    }
+}
+
+function verificationemailrequest()
+{
+    $email = $_POST['email'];
+
+    $data = [
+        'email' => $email
+    ];
+    $response = CallAPI("POST", "verificationemailrequest", $data, "");
+    if ($response['response'] == "success") {
+        echo "success";
+    } else {
+        print_r($response{"message"});
     }
 }
 
