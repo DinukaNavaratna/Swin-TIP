@@ -1,7 +1,7 @@
 import os, sys
 import datetime
 import hashlib
-from flask import request
+from flask import request, redirect
 from flask_restful import Resource
 from loguru import logger
 from .auth import new_access_token, new_refresh_token
@@ -126,12 +126,12 @@ class ActivateAccount(Resource):
 
         if activate_response == 1:
             logger.info("Activation successful - "+public_id)
-            return "Account activated successfully!"
-            #return render_template('./templates/activation_success.html')
+            return redirect("https://corputip.me/login.php?activated=true", code=200)
+            #return "Account activated successfully!"
         else:
             logger.info("Activation failed - "+public_id+"\n"+str(activate_response))
-            return "Account activation failed! Please request another verification link through the application."
-            #return render_template('./templates/activation_fail.html')
+            return redirect("https://corputip.me/verification_code.php?activated=false", code=200)
+            #return "Account activation failed! Please request another verification link through the application."
        
 
 

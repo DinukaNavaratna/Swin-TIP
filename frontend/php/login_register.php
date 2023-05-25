@@ -4,6 +4,14 @@ if (isset($_GET['logout']) && $_GET['logout'] == "true") {
     session_destroy();
     header("Location:index.php");
 }
+
+if (isset($_GET['activated']) && $_GET['activated'] == "true") {
+    echo "<script>alert('Your account has been activated successfully!');</script>";
+}
+if (isset($_GET['activated']) && $_GET['activated'] == "false") {
+    echo "<script>alert('Account activation failed! Please request another verification link through the application.');</script>";
+}
+
 ?>
 
 <script>
@@ -78,7 +86,7 @@ if (isset($_GET['logout']) && $_GET['logout'] == "true") {
                     window.open('login.php', '_self');
                 } else {
                     console.log("Response: " + response);
-                    alert("Error occurred!\nPlease refresh the page and try again...");
+                    alert("Error occurred!\n"+response);
                 }
             },
             error: function(exception) {
@@ -87,4 +95,35 @@ if (isset($_GET['logout']) && $_GET['logout'] == "true") {
             }
         });
     }
+    
+    function request() {
+        var email = $('#email').val().toLowerCase();;
+
+        if (!validateEmail(email)) {
+            alert("Please enter a valid email address");
+            return;
+        }
+
+        $.ajax({
+            url: "php/functions.php",
+            type: "post",
+            data: {
+                "func": "verificationemailrequest",
+                "email": email
+            },
+            success: function(response) {
+                if (response == "success") {
+                    window.open('login.php', '_self');
+                } else {
+                    console.log("Response: " + response);
+                    alert(response);
+                }
+            },
+            error: function(exception) {
+                console.log("Response: " + exception);
+                alert("Error occurred!\nPlease refresh the page and try again...");
+            }
+        });
+    }
+
 </script>
