@@ -127,11 +127,9 @@ class ActivateAccount(Resource):
         if activate_response == 1:
             logger.info("Activation successful - "+public_id)
             return redirect("https://corputip.me/login.php?activated=true", code=200)
-            #return "Account activated successfully!"
         else:
             logger.info("Activation failed - "+public_id+"\n"+str(activate_response))
             return redirect("https://corputip.me/verification_code.php?activated=false", code=200)
-            #return "Account activation failed! Please request another verification link through the application."
        
 
 
