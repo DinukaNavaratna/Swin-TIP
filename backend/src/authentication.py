@@ -4,6 +4,8 @@ import hashlib
 from flask import request, redirect
 from flask_restful import Resource
 from loguru import logger
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity
 from .auth import new_access_token, new_refresh_token
 from database.functions import Select, Insert, Update
 from .ses import send_email
@@ -34,7 +36,7 @@ class Login(Resource):
         login_response = Select("public_id, user_type, status, f_name, l_name, email, id", "users", " WHERE email='"+email+"' AND password='"+password+"'", 1)
 
         if(login_response == None):
-            return {"response": "failed", "message": "User not found!"}, 200
+            return {"response": "failed", "message": "Login failed!"}, 200
         elif(type(login_response) is tuple):
             if(login_response[2] == 0):
                 return {"response": "failed", "message": "Account not activated. Please verify the email address and try again!"}
@@ -154,7 +156,7 @@ class VerificationEmailRequest(Resource):
                 return {"response": "failed", "message": "Account is already activated. Please log in to proceed!"}
             public_id = verification_email_response[0]
             try:
-                send_email([email], 'SwinTIP-Account-Activation', '{"activation_link": "'+os.getenv("API_HOST")+'/activate/user/'+public_id+'", "home_link": "https://dinuka.live"}')
+                send_email([email], 'SwinTIP-Account-Activation', '{"activation_link": "'+os.getenv("API_HOST")+'/activate/user/'+public_id+'", "home_link": "https://corputip.me"}')
             except:
                 return {"response": "success", "message": "An error occurred when sending the confirmation email!"}, 200
             logger.info("Verification email request successful - "+email)
@@ -162,4 +164,61 @@ class VerificationEmailRequest(Resource):
         else:
             logger.info("Login failed - "+email+"\n"+str(verification_email_response))
             return {"response": "failed", "message": "Verification email request failed!", "description": str(verification_email_response)}, 200
-                
+
+
+class ResetPassword(Resource):
+    def post(self):
+        logger.debug("------------------------------------------------")
+        logger.info('/ResetPassword (post) - '+str(request.remote_addr))
+        try:
+            request_body = request.json
+            email = request_body["email"]
+            logger.info(email)
+        except Exception as exception:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            logger.error("Exception: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
+            return {"msg": "Error Occurred!"}, 403
+
+        reset_email_response = Select("public_id", "users", " WHERE email='"+email+"'", 1)
+
+        if(reset_email_response == None):
+            return {"response": "failed", "message": "User not found!"}, 200
+        elif(type(reset_email_response) is tuple):
+            public_id = reset_email_response[0]
+            logger.info("----------------------")
+            logger.info(public_id)
+            access_token = new_access_token("SwinTIP"+public_id)
+            try:
+                send_email([email], 'SwinTIP-Password-Reset', '{"reset_link": "'+os.getenv("WEB_HOST")+'/reset_password.php?id='+access_token+'", "home_link": "https://corputip.me"}')
+            except:
+                return {"response": "success", "message": "An error occurred when sending the password reset email!"}, 200
+            logger.info("Password reset email request successful - "+email)
+            return {"response": "success", "message": "Password reset email has been sent!"}, 200
+        else:
+            logger.info("Login failed - "+email+"\n"+str(reset_email_response))
+            return {"response": "failed", "message": "Password reset email request failed!", "description": str(reset_email_response)}, 200
+
+
+    @jwt_required()
+    def put(self):
+        logger.debug("------------------------------------------------")
+        logger.info('/ResetPassword (put) - '+str(request.remote_addr))
+        try:
+            public_id = get_jwt_identity()
+            public_id = public_id.replace("SwinTIP", "")
+            request_body = request.json
+            password = request_body["password"]
+            password = MD5Hash(password)
+        except Exception as exception:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            logger.error("Exception: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
+            return {"msg": "Error Occurred!"}, 403
+
+        reset_response = Update("users", "password = '"+password+"'", "public_id='"+public_id+"'")
+
+        if reset_response == 1:
+            logger.info("Password reset successful - "+public_id)
+            return {"response": "success", "message": "Password reset successful!"}, 200
+        else:
+            logger.info("Password reset failed - "+public_id+"\n"+str(reset_response))
+            return {"response": "failed", "message": "Password reset failed!", "description": str(reset_response)}, 200

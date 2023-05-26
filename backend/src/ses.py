@@ -59,6 +59,17 @@ def CreateTeamplate():
         }
     )
     print(response)
+    
+    template = open("templates/password_reset.txt", "r")
+    response = ses_client.create_template(
+        Template = {
+        "TemplateName" : "SwinTIP-Password-Reset",
+        "SubjectPart" : "Reset your password.",
+        "HtmlPart" : template.read(),
+        "TextPart" : "Welcome,\r\n\r\nPlease visit the following link by copying the following link into your browser to reset your password.\r\n\r\n{{reset_link}}\r\n\r\nThank you.\r\n\r\nSwinTIP\r\ninfo@corputip.me\r\n"
+        }
+    )
+    print(response)
 
 
 def DeleteTemplate():
