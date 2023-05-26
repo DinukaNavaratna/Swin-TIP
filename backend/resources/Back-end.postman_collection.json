@@ -1,0 +1,655 @@
+{
+	"info": {
+		"_postman_id": "59340007-7a9d-4e50-b1e3-22f130d097ee",
+		"name": "Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12665961",
+		"_collection_link": "https://www.postman.com/dinukanavaratna/workspace/swin-tip/collection/12665961-59340007-7a9d-4e50-b1e3-22f130d097ee?action=share&creator=12665961&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "DB",
+			"item": [
+				{
+					"name": "Create DB",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{staging}}/db_create",
+							"host": [
+								"{{staging}}"
+							],
+							"path": [
+								"db_create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Tables",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{staging}}/db_createtables",
+							"host": [
+								"{{staging}}"
+							],
+							"path": [
+								"db_createtables"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dummy Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{staging}}/db_dummydata",
+							"host": [
+								"{{staging}}"
+							],
+							"path": [
+								"db_dummydata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Drop Tables",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{staging}}/db_droptables",
+							"host": [
+								"{{staging}}"
+							],
+							"path": [
+								"db_droptables"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Truncate Tables",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{staging}}/db_truncatetables",
+							"host": [
+								"{{staging}}"
+							],
+							"path": [
+								"db_truncatetables"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{staging}}/",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/login",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"test\",\r\n    \"fname\": \"fname\",\r\n    \"lname\": \"lname\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/register",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activate Account",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/activate/user/{{public_id}}",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"activate",
+						"user",
+						"{{public_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verification Email Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/verificationemailrequest",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"verificationemailrequest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Profile - Retrieve",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/userprofile/{{public_id}}",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"userprofile",
+						"{{public_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Profile - Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"f_name\": \"f name\",\r\n    \"l_name\": \"l_name\",\r\n    \"bday\": \"bday\",\r\n    \"edu_q\": \"edu_q\",\r\n    \"prof_q\": \"prof_q\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/userprofile/{{public_id}}",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"userprofile",
+						"{{public_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modules - Retrieve",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/modules",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"modules"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Applicants - Retrieve",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vac_id\": \"\",\r\n    \"user_id\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/applicants",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"applicants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vacancies - Retrieve",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/vacancies",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"vacancies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vacancies - Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"title\",\r\n    \"module\": \"module\",\r\n    \"base\": \"base\",\r\n    \"location\": \"location\",\r\n    \"description\": \"description\",\r\n    \"qualifications\": \"qualifications\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/vacancies",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"vacancies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vacancies - Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"public_id\": \"157aa8692f9efbb8217cec3c045e118b\",\r\n    \"title\": \"title-updated\",\r\n    \"module\": \"module\",\r\n    \"base\": \"base\",\r\n    \"location\": \"location\",\r\n    \"description\": \"description\",\r\n    \"qualifications\": \"qualifications\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/vacancies",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"vacancies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vacancies - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{admin_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"public_id\": \"157aa8692f9efbb8217cec3c045e118b\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/vacancies",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"vacancies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vacancies - Public",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"count\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/publicvacancies",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"publicvacancies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Apply to Vacancies",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vacancy_id\": \"1146b6c258a28b28941c57851ee084a1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/applyvacancy",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"applyvacancy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Vacancy Details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"count\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/vacancydetails/{{vacancy}}",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"vacancydetails",
+						"{{vacancy}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Password Reset Email Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{staging}}/resetpassword",
+					"host": [
+						"{{staging}}"
+					],
+					"path": [
+						"resetpassword"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "staging",
+			"value": "https://backend.sample.com",
+			"type": "string"
+		},
+		{
+			"key": "public_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "vacancy_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
