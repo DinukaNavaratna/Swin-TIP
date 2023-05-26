@@ -44,6 +44,11 @@ if (isset($_GET['activated']) && $_GET['activated'] == "false") {
                 } else {
                     console.log("Response: " + response);
                     alert(response);
+                    let text;
+                    if (confirm("Do you want to reset password?") == true) {
+                        request_psw_reset(email);
+                    }
+                    
                 }
             },
             error: function(exception) {
@@ -126,4 +131,67 @@ if (isset($_GET['activated']) && $_GET['activated'] == "false") {
         });
     }
 
+
+    function reset_password() {
+        <?php
+        $id = "";
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+        }
+        ?>
+        var password = $('#password1').val();
+        var password2 = $('#password2').val();
+
+        if (password != password2) {
+            alert("Password confirmation failed! Please enter the same password to confirm.");
+            return;
+        }
+
+        $.ajax({
+            url: "php/functions.php",
+            type: "post",
+            data: {
+                "func": "reset_password",
+                "password": password,
+                "token": <?php echo '"'.$id.'"'; ?>
+            },
+            success: function(response) {
+                if (response == "success") {
+                    alert("Password reset successful!\nLogin using your new password.")
+                    window.open('login.php', '_self');
+                } else {
+                    console.log("Response: " + response);
+                    alert("Error occurred!\n"+response);
+                }
+            },
+            error: function(exception) {
+                console.log("Response: " + exception);
+                alert("Error occurred!\nPlease refresh the page and try again...");
+            }
+        });
+    }
+
+    function request_psw_reset(email) {
+        $.ajax({
+            url: "php/functions.php",
+            type: "post",
+            data: {
+                "func": "request_psw_reset",
+                "email": email
+            },
+            success: function(response) {
+                if (response == "success") {
+                    console.log("Password reset link has been sent to your email address.");
+                    alert("Password reset link has been sent to your email address.");
+                } else {
+                    console.log("Response: " + response);
+                    alert(response);                    
+                }
+            },
+            error: function(exception) {
+                console.log("Response: " + exception);
+                alert("Error occurred!\nPlease refresh the page and try again...");
+            }
+        });
+    }
 </script>

@@ -15,6 +15,10 @@ if (isset($_POST['func'])) {
         vacancy("new");
     } else if ($_POST['func'] == "verificationemailrequest") {
         verificationemailrequest();
+    } else if ($_POST['func'] == "reset_password") {
+        reset_password();
+    } else if ($_POST['func'] == "request_psw_reset") {
+        request_psw_reset();
     }
 }
 
@@ -249,5 +253,34 @@ function vacancy($func)
         echo "success";
     } else {
         print_r($response);
+    }
+}
+
+function reset_password() {
+    $access_token = $_POST['token'];
+    $password = $_POST['password'];
+
+    $data = [
+        'password' => $password
+    ];
+    $response = CallAPI("PUT", "resetpassword", $data, $access_token);
+    if (isset($response['response']) && $response['response'] == "success") {
+        echo "success";
+    } else {
+        echo $response["description"];
+    }
+}
+
+function request_psw_reset() {
+    $email = $_POST['email'];
+
+    $data = [
+        'email' => $email
+    ];
+    $response = CallAPI("POST", "resetpassword", $data, "");
+    if (isset($response['response']) && $response['response'] == "success") {
+        echo "success";
+    } else {
+        echo $response["message"];
     }
 }

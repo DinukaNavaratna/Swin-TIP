@@ -62,8 +62,9 @@ require 'php/profile.php';
                                                                                                         echo 'No resume uploaded';
                                                                                                     } ?></li><br>
                             <li><i class="fa fa-angle-right text-primary me-2"></i><b>Last Edited On:</b> <?php echo $profile['last_edit_on']; ?></li><br>
+                            <?php if($own_profile) { ?>
                             <button class="btn btn-primary w-30 py-2" onclick="window.location.search += '&edit=true';">Edit Profile</button>
-                        <?php } ?>
+                        <?php }} ?>
                     </ul>
                 </div>
             </div>
