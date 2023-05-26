@@ -128,10 +128,10 @@ class ActivateAccount(Resource):
 
         if activate_response == 1:
             logger.info("Activation successful - "+public_id)
-            return redirect("https://corputip.me/login.php?activated=true", code=200)
+            return redirect(os.getenv("WEB_HOST")+"/login.php?activated=true", code=200)
         else:
             logger.info("Activation failed - "+public_id+"\n"+str(activate_response))
-            return redirect("https://corputip.me/verification_code.php?activated=false", code=200)
+            return redirect(os.getenv("WEB_HOST")+"/verification_code.php?activated=false", code=200)
        
 
 
@@ -185,8 +185,6 @@ class ResetPassword(Resource):
             return {"response": "failed", "message": "User not found!"}, 200
         elif(type(reset_email_response) is tuple):
             public_id = reset_email_response[0]
-            logger.info("----------------------")
-            logger.info(public_id)
             access_token = new_access_token("SwinTIP"+public_id)
             try:
                 send_email([email], 'SwinTIP-Password-Reset', '{"reset_link": "'+os.getenv("WEB_HOST")+'/reset_password.php?id='+access_token+'", "home_link": "https://corputip.me"}')
