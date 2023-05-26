@@ -1,6 +1,6 @@
 <?php
-require 'php/login_register.php';
 require 'php/header.php';
+require 'php/login_register.php';
 ?>
 
 <!-- Header End -->
@@ -66,6 +66,9 @@ require 'php/header.php';
                     <br>
                             <p style="text-align:center;">Already have an account?<br></p>
                             <button class="btn btn-secondary w-100 py-3" onclick="window.open('login.php', '_self');">Login</button>
+                    <br><br>
+                            <p style="text-align:center;">Or<br></p>
+                            <button class="btn btn-secondary w-100 py-3" onclick="window.open('verification_code.php', '_self');">Request Another Email Verification Code</button>
                 </div>
             </div>
         </div>

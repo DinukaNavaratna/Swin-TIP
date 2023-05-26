@@ -48,6 +48,9 @@ require 'php/login_register.php';
                     <br>
                     <p style="text-align:center;">New to CorpU?<br></p>
                     <button class="btn btn-secondary w-100 py-3" onclick="window.open('register.php', '_self');">Register</button>
+                    <br><br>
+                            <p style="text-align:center;">Or<br></p>
+                            <button class="btn btn-secondary w-100 py-3" onclick="window.open('verification_code.php', '_self');">Request Another Email Verification Code</button>
                 </div>
             </div>
         </div>
