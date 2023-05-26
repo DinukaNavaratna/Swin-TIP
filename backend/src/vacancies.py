@@ -306,7 +306,7 @@ class ApplyVacancy(Resource):
             logger.error("\nException: "+str(exception)+"\nLine: "+str(exc_tb.tb_lineno))
             return {"response": "error", "message": "Required fields are missing!"}, 403
 
-        user_response = Select("id, email, public_id", "users", " WHERE public_id='"+user_id+"'", 1)
+        user_response = Select("id, email, f_name, l_name", "users", " WHERE public_id='"+user_id+"'", 1)
 
         if(user_response == None):
             return {"response": "failed", "message": "User not found!"}, 200
@@ -316,7 +316,7 @@ class ApplyVacancy(Resource):
             logger.info("User not  found - "+email+"\n"+str(user_response))
             return {"response": "failed", "message": "User not  found!", "description": str(user_response)}, 200
         
-        vacancy_response = Select("id, title, module, location, published_by", "vacancies", " WHERE public_id='"+vacancy_id+"'", 1)
+        vacancy_response = Select("vacancies.id, vacancies.title, modules.name, vacancies.location, vacancies.published_by", "vacancies", " INNER JOIN modules ON vacancies.module = modules.id WHERE public_id='"+vacancy_id+"'", 1)
 
         if(vacancy_response == None):
             return {"response": "failed", "message": "Vacancy not found!"}, 200
@@ -337,7 +337,7 @@ class ApplyVacancy(Resource):
                 send_email([user_response[1]], 'SwinTIP-Application-Confirmation', '{"job_title": "'+vacancy_response[1]+'", "module": "'+str(vacancy_response[2])+'", "location": "'+vacancy_response[3]+'", "applied_on": "'+str(date.today())+'", "home_link": "https://dinuka.live"}')
                 staff_response = Select("email", "users", " WHERE id='"+str(vacancy_response[4])+"'", 1)
                 if(type(staff_response) is tuple):
-                    send_email([staff_response[0]], 'SwinTIP-New-Applicant', '{"job_title": "'+vacancy_response[1]+'", "module": "'+str(vacancy_response[2])+'", "location": "'+vacancy_response[3]+'", "applicant_name": "'+user_response[2]+'", "applicant_email": "'+user_response[1]+'", "applied_on": "'+str(date.today())+'", "home_link": "https://dinuka.live"}')
+                    send_email([staff_response[0]], 'SwinTIP-New-Applicant', '{"job_title": "'+vacancy_response[1]+'", "module": "'+str(vacancy_response[2])+'", "location": "'+vacancy_response[3]+'", "applicant_name": "'+user_response[2]+' '+user_response[3]+'", "applicant_email": "'+user_response[1]+'", "applied_on": "'+str(date.today())+'", "home_link": "https://dinuka.live"}')
                     logger.info("\nEmails sent to: "+str(user_response[1])+" & "+str(staff_response[0]))
             except Exception as exception:
                 exc_type, exc_obj, exc_tb = sys.exc_info()

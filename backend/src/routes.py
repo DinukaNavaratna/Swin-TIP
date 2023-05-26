@@ -1,5 +1,5 @@
 from .auth import RefreshToken, ValidateToken
-from .authentication import Login, Register, ActivateAccount, VerificationEmailRequest
+from .authentication import Login, Register, ActivateAccount, VerificationEmailRequest, ResetPassword
 from .users import UserProfile, ResumeDownload
 from .vacancies import PublicVacancies, Vacancies, ApplyVacancy, Modules, ViewApplicants, VacancyDetails
 
@@ -18,3 +18,4 @@ def initialize_routes(api):
     api.add_resource(Modules, "/modules")
     api.add_resource(ViewApplicants, "/applicants")
     api.add_resource(ResumeDownload, "/cv/<id>")
+    api.add_resource(ResetPassword, "/resetpassword")
